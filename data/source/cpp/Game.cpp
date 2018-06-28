@@ -33,6 +33,47 @@ GLfloat manupilator_color[][4] = {
 
 //*******************************************************************************************************************************************
 
+GLdouble vertex[][3] = {
+    {0.0, 0.0, 0.0},
+    {1.0, 0.0, 0.0},
+    {1.0, 1.0, 0.0},
+    {0.0, 1.0, 0.0},
+    {0.0, 0.0, 1.0},
+    {1.0, 0.0, 1.0},
+    {1.0, 1.0, 1.0},
+    {0.0, 1.0, 1.0}};
+
+int face[][4] = {
+    {0, 1, 2, 3},
+    {1, 5, 6, 2},
+    {5, 4, 7, 6},
+    {4, 0, 3, 7},
+    {4, 5, 1, 0},
+    {3, 2, 6, 7}};
+
+GLdouble color[][3] = {
+    {1.0, 0.0, 0.0}, /* 赤 */
+    {0.0, 1.0, 0.0}, /* 緑 */
+    {0.0, 0.0, 1.0}, /* 青 */
+    {1.0, 1.0, 0.0}, /* 黄 */
+    {1.0, 0.0, 1.0}, /* マゼンタ */
+    {0.0, 1.0, 1.0}  /* シアン 　*/
+};
+
+GLdouble normal[][3] = {
+    {0.0, 0.0, -1.0},
+    {1.0, 0.0, 0.0},
+    {0.0, 0.0, 1.0},
+    {-1.0, 0.0, 0.0},
+    {0.0, -1.0, 0.0},
+    {0.0, 1.0, 0.0}};
+
+GLfloat light0pos[] = {0.0, 3.0, 5.0, 1.0};
+GLfloat light1pos[] = {5.0, 3.0, 0.0, 1.0};
+
+GLfloat green[] = {0.0, 1.0, 0.0, 1.0};
+GLfloat red[] = {0.8, 0.2, 0.2, 1.0};
+
 int main(int argc, char *argv[])
 {
     if (!InitWindow())
@@ -51,10 +92,12 @@ int main(int argc, char *argv[])
     {
         SDL_PollEvent(&event);
         glClearColor(0.f, 0.f, 0.f, 0.f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        //glEnable(GL_DEPTH_TEST);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         Draw();
 
+        //glDisable(GL_DEPTH_TEST);
         SDL_GL_SwapWindow(GameManager::window);
     }
 
@@ -92,7 +135,7 @@ bool InitGL(int argc, char *argv[])
     //gl系とglut系の初期化
     glutInit(&argc, argv);
 
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 
     //二次元テクスチャを有効
     glEnable(GL_TEXTURE_2D);
@@ -100,9 +143,7 @@ bool InitGL(int argc, char *argv[])
     /* ウィンドウ全体をビューポートにする */
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-
-
-  glMatrixMode(GL_PROJECTION);
+    glMatrixMode(GL_PROJECTION);
     /* 変換行列の初期化 */
     glLoadIdentity();
 
@@ -125,7 +166,16 @@ bool InitGL(int argc, char *argv[])
     //glClearDepth(1.0f);
 
     /* Enables Depth Testing */
-    //glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+
+    glCullFace(GL_FRONT);
+
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, green);
 
     /* The Type Of Depth Test To Do */
     //glDepthFunc(GL_LEQUAL);
@@ -176,6 +226,23 @@ void Draw()
         glColor4fv(manupilator_color[i]);
         glVertex3dv(manupilator_vertex[manupilator_edge[i][0]]);
         glVertex3dv(manupilator_vertex[manupilator_edge[i][1]]);
+    }
+    glEnd();
+
+    glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
+    glLightfv(GL_LIGHT1, GL_POSITION, light1pos);
+
+    glRotated(0.1, 0, 1, 0);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, red);
+    glBegin(GL_QUADS);
+    for (int j = 0; j < 6; ++j)
+    {
+        glNormal3dv(normal[j]);
+        for (int i = 0; i < 4; ++i)
+        {
+            //glColor3dv(color[j]);
+            glVertex3dv(vertex[face[j][i]]);
+        }
     }
     glEnd();
 
