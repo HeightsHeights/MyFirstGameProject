@@ -100,6 +100,9 @@ bool InitGL(int argc, char *argv[])
     /* ウィンドウ全体をビューポートにする */
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
+
+
+  glMatrixMode(GL_PROJECTION);
     /* 変換行列の初期化 */
     glLoadIdentity();
 
