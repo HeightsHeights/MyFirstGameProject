@@ -36,7 +36,7 @@ class OBJVERTEX
 public:
   OBJVEC3 normal;
   OBJVEC3 position;
-  OBJVEC2 texcoords;
+  OBJVEC2 texcoord;
   OBJVERTEX() {}
 };
 ////////////////////////////////////////////////////////////////
@@ -60,6 +60,14 @@ public:
 class OBJMESH
 {
 private:
+  std::vector<OBJVEC3> positions;
+  std::vector<OBJVEC3> normals;
+  std::vector<OBJVEC3> texcoords;
+  std::vector<OBJVERTEX> t_vertices;
+  std::vector<OBJSUBSET> t_subsets;
+
+  std::vector<unsigned int> t_indices;
+
   bool LoadMTLFile(const char *filename);
   bool LoadOBJFile(const char *filename);
 
