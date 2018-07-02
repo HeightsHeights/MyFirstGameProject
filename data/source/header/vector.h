@@ -28,3 +28,15 @@ public:
   Vector3f Matrix_multiplication(float matrix[3][3]);
   Vector3f Rotate(Vector3f v, float angle);
 };
+
+class Vector2f
+{
+public:
+  //フィールド
+  float x;
+  float y;
+
+  //コンストラクタ
+  Vector2f();
+  Vector2f(float a, float b);
+};
