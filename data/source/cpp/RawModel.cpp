@@ -7,27 +7,44 @@
 ////////////////////////////////////////////////////////////////
 //　ベクトル3fからなるオブジェクト用のベクトル
 ////////////////////////////////////////////////////////////////
-class OBJVEC3 : Vector3f
+class OBJVEC3 : public Vector3f
 {
 public:
-  OBJVEC3(float nx = 0.0f, float ny = 0.0f, float nz = 0.0f);
+  OBJVEC3();
+  OBJVEC3(float nx, float ny, float nz);
+
   operator float *();
   operator const float() const;
 };
+
+OBJVEC3::OBJVEC3() : Vector3f()
+{
+}
+OBJVEC3::OBJVEC3(float nx, float ny, float nz) : Vector3f(nx, ny, nz)
+{
+}
 
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
 //　ベクトル2fからなるオブジェクト用のベクトル
 ////////////////////////////////////////////////////////////////
-class OBJVEC2 : Vector2f
+class OBJVEC2 : public Vector2f
 {
 public:
-  OBJVEC2(float nx = 0.0f, float ny = 0.0f);
+  OBJVEC2();
+  OBJVEC2(float nx, float ny);
   operator float *();
   operator const float() const;
 };
-
+OBJVEC2::OBJVEC2() : Vector2f()
+{
+}
+OBJVEC2::OBJVEC2(float nx, float ny) : Vector2f(nx, ny)
+{
+  x = nx;
+  y = ny;
+}
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
@@ -62,15 +79,6 @@ public:
 class OBJMESH
 {
 private:
-  /*
-  std::vector<OBJVEC3> positions;
-  std::vector<OBJVEC3> normals;
-  std::vector<OBJVEC3> texcoords;
-  std::vector<OBJVERTEX> t_vertices;
-  std::vector<OBJSUBSET> t_subsets;
-
-  std::vector<unsigned int> t_indices;
-*/
   bool LoadMTLFile(const char *filename);
   bool LoadOBJFile(const char *filename);
 
@@ -88,7 +96,7 @@ bool OBJMESH::LoadFile(const char *filename)
   char buf[OBJ_BUFFER_LENGTH] = {0};
   std::vector<OBJVEC3> positions;
   std::vector<OBJVEC3> normals;
-  std::vector<OBJVEC3> texcoords;
+  std::vector<OBJVEC2> texcoords;
   std::vector<OBJVERTEX> t_vertices;
   std::vector<OBJSUBSET> t_subsets;
 
@@ -100,7 +108,7 @@ bool OBJMESH::LoadFile(const char *filename)
 
   if (!file.is_open())
   {
-    printf("error file_open");
+    printf("error file_open\n");
     return false;
   }
 
@@ -109,6 +117,7 @@ bool OBJMESH::LoadFile(const char *filename)
     file >> buf;
     if (!file)
     {
+      printf("a\n");
       break;
     }
 
@@ -127,6 +136,9 @@ bool OBJMESH::LoadFile(const char *filename)
     else if (0 == strcmp(buf, "vt"))
     {
       //テクスチャ座標
+      float u, v;
+      file >> u >> v;
+      texcoords.push_back(OBJVEC2(u, v));
     }
     else if (0 == strcmp(buf, "vn"))
     {
@@ -140,3 +152,10 @@ bool OBJMESH::LoadFile(const char *filename)
     }
   }
 }
+/*
+int main()
+{
+  OBJMESH mesh;
+  mesh.LoadFile("../../data_3d/test.obj");
+  return 0;
+}*/
