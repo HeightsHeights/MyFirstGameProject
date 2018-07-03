@@ -152,10 +152,10 @@ bool OBJMESH::LoadFile(const char *filename)
     }
   }
 }
-/*
+
 int main()
 {
   OBJMESH mesh;
-  mesh.LoadFile("../../data_3d/test.obj");
+  mesh.LoadFile("data/data_3d/test.obj");
   return 0;
-}*/
+}
