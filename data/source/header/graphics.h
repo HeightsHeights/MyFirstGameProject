@@ -9,5 +9,5 @@
 //vector関係
 #include "../header/vector.h"
 
-#define OBJ_NAME_LENGTH 20
-#define OBJ_BUFFER_LENGTH 20
+#define OBJ_NAME_LENGTH 128
+#define OBJ_BUFFER_LENGTH 128

@@ -2,6 +2,8 @@
 //
 
 #include "../header/graphics.h"
+#include <fstream>
+#include <string.h>
 ////////////////////////////////////////////////////////////////
 //　ベクトル3fからなるオブジェクト用のベクトル
 ////////////////////////////////////////////////////////////////
@@ -60,6 +62,7 @@ public:
 class OBJMESH
 {
 private:
+  /*
   std::vector<OBJVEC3> positions;
   std::vector<OBJVEC3> normals;
   std::vector<OBJVEC3> texcoords;
@@ -67,7 +70,7 @@ private:
   std::vector<OBJSUBSET> t_subsets;
 
   std::vector<unsigned int> t_indices;
-
+*/
   bool LoadMTLFile(const char *filename);
   bool LoadOBJFile(const char *filename);
 
@@ -77,3 +80,63 @@ public:
   void Draw();
 };
 ////////////////////////////////////////////////////////////////
+
+bool OBJMESH::LoadFile(const char *filename)
+{
+  std::ifstream file;
+
+  char buf[OBJ_BUFFER_LENGTH] = {0};
+  std::vector<OBJVEC3> positions;
+  std::vector<OBJVEC3> normals;
+  std::vector<OBJVEC3> texcoords;
+  std::vector<OBJVERTEX> t_vertices;
+  std::vector<OBJSUBSET> t_subsets;
+
+  std::vector<unsigned int> t_indices;
+
+  unsigned long total = 0;
+
+  file.open(filename, std::fstream::in);
+
+  if (!file.is_open())
+  {
+    printf("error file_open");
+    return false;
+  }
+
+  while (1)
+  {
+    file >> buf;
+    if (!file)
+    {
+      break;
+    }
+
+    if (0 == strcmp(buf, "#"))
+    {
+      //コメント
+    }
+    else if (0 == strcmp(buf, "v"))
+    {
+      //頂点座標
+      float x, y, z;
+      file >> x >> y >> z;
+      OBJVEC3 v(x, y, z);
+      positions.push_back(v);
+    }
+    else if (0 == strcmp(buf, "vt"))
+    {
+      //テクスチャ座標
+    }
+    else if (0 == strcmp(buf, "vn"))
+    {
+      //法線ベクトル
+      float x, y, z;
+      file >> x >> y >> z;
+      normals.push_back(OBJVEC3(x, y, z));
+    }
+    else if (0 == strcmp(buf, "f"))
+    {
+    }
+  }
+}
