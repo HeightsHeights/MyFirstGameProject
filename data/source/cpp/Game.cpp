@@ -185,38 +185,6 @@ bool InitGL(int argc, char *argv[])
     return true;
 }
 
-bool LoadOBJ(const char *path, std::vector<float> &out_vertices, std::vector<float> &out_uvs, std::vector<float> &out_noemals)
-{
-    FILE *file = fopen(path, "r");
-    if (file == NULL)
-    {
-        printf("file open error\n");
-        return false;
-    }
-
-    while (1)
-    {
-        char lineHeHeader[128];
-        int res = fscanf(file, "%s", lineHeHeader);
-        if (res == EOF)
-        {
-            break;
-        }
-        if (strcmp(lineHeHeader, "v") == 0)
-        {
-        }
-        else if (strcmp(lineHeHeader, "vt") == 0)
-        {
-        }
-        else if (strcmp(lineHeHeader, "vn") == 0)
-        {
-        }
-        else if (strcmp(lineHeHeader, "f") == 0)
-        {
-        }
-    }
-}
-
 void Draw()
 {
 
