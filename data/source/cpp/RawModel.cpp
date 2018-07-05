@@ -104,6 +104,10 @@ bool OBJMESH::LoadFile(const char *filename)
 
   unsigned long total = 0;
 
+  unsigned int dwFaceIncex = 0;
+  unsigned int dwFaceCount = 0;
+  unsigned int dwCurSubset = 0;
+
   file.open(filename, std::fstream::in);
 
   if (!file.is_open())
@@ -149,6 +153,53 @@ bool OBJMESH::LoadFile(const char *filename)
     }
     else if (0 == strcmp(buf, "f"))
     {
+      unsigned int iPosition, iTexCoord, iNoemal;
+      unsigned int p[4] = {-1}, t[4] = {-1}, n[4] = {-1};
+      OBJVERTEX vertex;
+
+      dwFaceIncex++;
+      dwFaceCount++;
+      int count;
+      unsigned int index = 0;
+      for (int iFace = 0; iFace < 4; iFace++)
+      {
+
+        count++;
+
+        file >> iPosition;
+        vertex.position = positions[iPosition - 1];
+        p[iFace] = iPosition - 1;
+
+        if ('/' == file.peek())
+        {
+          if ('/' == file.peek())
+          {
+            file.ignore();
+
+            file >> iTexCoord;
+            vertex.texcoord = texcoords[iTexCoord - 1];
+            t[iFace] = iTexCoord - 1;
+          }
+          if ('/' == file.peek())
+          {
+            file.ignore();
+            file >> iNoemal;
+            vertex.normal = normals[iNoemal - 1];
+            n[iFace] = iNoemal - 1;
+          }
+        }
+        if (iFace < 3)
+        {
+          t_vertices.push_back(vertex);
+          index = t_vertices.size() - 1;
+          t_indices.push_back(index);
+        }
+
+        if ('\n' == file.peek())
+        {
+          break;
+        }
+      }
     }
   }
 }
