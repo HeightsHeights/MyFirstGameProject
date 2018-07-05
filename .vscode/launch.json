@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/RawModel",
+            "program": "${workspaceFolder}/Game",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
@@ -27,7 +27,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": ""
+            "preLaunchTask": "build Game"
         }
     ]
 }

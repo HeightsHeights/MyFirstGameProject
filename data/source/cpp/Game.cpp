@@ -1,5 +1,6 @@
 //ゲームのメイン
 #include "../header/game.h"
+#include "../header/rawmodel.h"
 
 //window系の初期化
 bool InitWindow();
@@ -73,6 +74,8 @@ GLfloat light1pos[] = {5.0, 3.0, 0.0, 1.0};
 
 GLfloat green[] = {0.0, 1.0, 0.0, 1.0};
 GLfloat red[] = {0.8, 0.2, 0.2, 1.0};
+
+OBJMESH mesh;
 
 int main(int argc, char *argv[])
 {
@@ -155,6 +158,8 @@ bool InitGL(int argc, char *argv[])
 
     gluLookAt(3.0, 4.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
+    mesh.LoadFile("data/data_3d/test.obj");
+
     //GameManager::context = SDL_GL_CreateContext(window);
     /* Enable smooth shading */
     //glShadeModel(GL_SMOOTH);
@@ -188,6 +193,8 @@ bool InitGL(int argc, char *argv[])
 void Draw()
 {
 
+    mesh.Draw();
+
     glBegin(GL_LINES);
     for (int i = 0; i < 3; i++)
     {
@@ -200,6 +207,7 @@ void Draw()
     glLightfv(GL_LIGHT0, GL_POSITION, light0pos);
     glLightfv(GL_LIGHT1, GL_POSITION, light1pos);
 
+    /*
     glRotated(0.1, 0, 1, 0);
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, red);
     glBegin(GL_QUADS);
@@ -213,7 +221,7 @@ void Draw()
         }
     }
     glEnd();
-
+    */
     glFlush();
 }
 

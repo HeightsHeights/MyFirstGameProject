@@ -7,7 +7,7 @@
 #include <GL/glut.h>
 
 //vector関係
-#include "../header/vector.h"
+//#include "../header/vector.h"
 
 #define OBJ_NAME_LENGTH 128
 #define OBJ_BUFFER_LENGTH 128

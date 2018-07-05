@@ -10,5 +10,5 @@ Vector:
 RawModel:
 	g++ ./data/source/cpp/Vector.cpp -c -g
 	g++ ./data/source/cpp/RawModel.cpp -c -g
-	g++  Vector.o RawModel.o -o RawModel
+	g++  Vector.o RawModel.o -o RawModel -lGL -lglut -lGLU -Wl,-rpath,/usr/local/lib
 	rm -f ./*.o

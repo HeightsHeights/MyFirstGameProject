@@ -1,9 +1,11 @@
 //モデルデータ保存
 //
-
+#include "../header/rawmodel.h"
 #include "../header/graphics.h"
 #include <fstream>
 #include <string.h>
+
+/*
 ////////////////////////////////////////////////////////////////
 //　ベクトル3fからなるオブジェクト用のベクトル
 ////////////////////////////////////////////////////////////////
@@ -16,14 +18,14 @@ public:
   operator float *();
   operator const float() const;
 };
-
+*/
 OBJVEC3::OBJVEC3() : Vector3f()
 {
 }
 OBJVEC3::OBJVEC3(float nx, float ny, float nz) : Vector3f(nx, ny, nz)
 {
 }
-
+/*
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
@@ -37,14 +39,14 @@ public:
   operator float *();
   operator const float() const;
 };
+*/
 OBJVEC2::OBJVEC2() : Vector2f()
 {
 }
 OBJVEC2::OBJVEC2(float nx, float ny) : Vector2f(nx, ny)
 {
-  x = nx;
-  y = ny;
 }
+/*
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
@@ -53,9 +55,9 @@ OBJVEC2::OBJVEC2(float nx, float ny) : Vector2f(nx, ny)
 class OBJVERTEX
 {
 public:
+  OBJVEC2 texcoord;
   OBJVEC3 normal;
   OBJVEC3 position;
-  OBJVEC2 texcoord;
   OBJVERTEX() {}
 };
 ////////////////////////////////////////////////////////////////
@@ -79,6 +81,10 @@ public:
 class OBJMESH
 {
 private:
+  OBJVERTEX *m_Vertex;
+  OBJSUBSET *m_Subset;
+  unsigned int *m_Indices;
+
   bool LoadMTLFile(const char *filename);
   bool LoadOBJFile(const char *filename);
 
@@ -88,8 +94,13 @@ public:
   void Draw();
 };
 ////////////////////////////////////////////////////////////////
+*/
+bool OBJMESH::LoadMTLFile(const char *filename)
+{
+  char buf[OBJ_BUFFER_LENGTH] = {0};
+}
 
-bool OBJMESH::LoadFile(const char *filename)
+bool OBJMESH::LoadOBJFile(const char *filename)
 {
   std::ifstream file;
 
@@ -126,6 +137,7 @@ bool OBJMESH::LoadFile(const char *filename)
     }
     if (0 == strcmp(buf, "#"))
     {
+
       //コメント
     }
     else if (0 == strcmp(buf, "v"))
@@ -154,59 +166,82 @@ bool OBJMESH::LoadFile(const char *filename)
     else if (0 == strcmp(buf, "f"))
     {
       unsigned int iPosition, iTexCoord, iNoemal;
-      unsigned int p[4] = {-1}, t[4] = {-1}, n[4] = {-1};
+      //unsigned int p[4] = {-1}, t[4] = {-1}, n[4] = {-1};
       OBJVERTEX vertex;
 
       dwFaceIncex++;
       dwFaceCount++;
-      int count;
+      //int count;
       unsigned int index = 0;
-      for (int iFace = 0; iFace < 4; iFace++)
+      for (int iFace = 0; iFace < 3; iFace++)
       {
 
-        count++;
+        //count++;
 
         file >> iPosition;
         vertex.position = positions[iPosition - 1];
-        p[iFace] = iPosition - 1;
+        //p[iFace] = iPosition - 1;
 
         if ('/' == file.peek())
         {
-          if ('/' == file.peek())
-          {
-            file.ignore();
+          file.ignore();
 
+          //テクスチャ情報があれば追加
+          if ('/' != file.peek())
+          {
             file >> iTexCoord;
             vertex.texcoord = texcoords[iTexCoord - 1];
-            t[iFace] = iTexCoord - 1;
+            //t[iFace] = iTexCoord - 1;
           }
+
           if ('/' == file.peek())
           {
             file.ignore();
             file >> iNoemal;
             vertex.normal = normals[iNoemal - 1];
-            n[iFace] = iNoemal - 1;
+            //n[iFace] = iNoemal - 1;
           }
         }
-        if (iFace < 3)
-        {
-          t_vertices.push_back(vertex);
-          index = t_vertices.size() - 1;
-          t_indices.push_back(index);
-        }
+
+        t_vertices.push_back(vertex);
+        index = t_vertices.size() - 1;
+        t_indices.push_back(index);
 
         if ('\n' == file.peek())
         {
           break;
         }
       }
+      return true;
     }
   }
 }
 
+bool OBJMESH::LoadFile(const char *filename)
+{
+  if (!LoadOBJFile(filename))
+  {
+    printf("error read file\n");
+    return false;
+  }
+
+  return true;
+}
+
+void OBJMESH::Draw()
+{
+  for (unsigned int i = 0; i < 1; i++)
+  {
+    glInterleavedArrays(GL_T2F_N3F_V3F, 0, m_Vertex);
+    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, &);
+  }
+}
+
+/*
 int main()
 {
   OBJMESH mesh;
   mesh.LoadFile("data/data_3d/test.obj");
   return 0;
 }
+*/
