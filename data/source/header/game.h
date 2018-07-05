@@ -5,6 +5,7 @@
 //sdl関係
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
+#include <SDL2/SDL_opengles2.h>
 
 //gl関係
 #include <GL/gl.h>

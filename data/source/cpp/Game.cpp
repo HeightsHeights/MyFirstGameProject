@@ -160,6 +160,12 @@ bool InitGL(int argc, char *argv[])
 
     mesh.LoadFile("data/data_3d/test.obj");
 
+    for (int i = 0; i < mesh.VERTICES.size() / 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+            printf("x:%fy:%fz:%f\n", mesh.VERTICES[i + j].position.x, mesh.VERTICES[i + j].position.y, mesh.VERTICES[i + j].position.z);
+    }
+
     //GameManager::context = SDL_GL_CreateContext(window);
     /* Enable smooth shading */
     //glShadeModel(GL_SMOOTH);
@@ -195,6 +201,20 @@ void Draw()
 
     mesh.Draw();
 
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+
+    // バッファをバインドする
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+    glBufferData(GL_ARRAY_BUFFER, mesh.VERTICES.size() * sizeof(OBJVERTEX), &mesh.VERTICES[0], GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glVertexPointer(3, GL_FLOAT, 0, 0);
+    glColor4ub(255, 255, 255, 255);
+    glDrawArrays(GL_TRIANGLES, 0, 12);
+
     glBegin(GL_LINES);
     for (int i = 0; i < 3; i++)
     {
@@ -222,6 +242,15 @@ void Draw()
     }
     glEnd();
     */
+    /*
+    glBegin(GL_TRIANGLE_FAN);
+    for (int i = 0; i < mesh.VERTICES.size() / 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+            glVertex3f(mesh.VERTICES[i + j].position.x / 100, mesh.VERTICES[i + j].position.y / 100, mesh.VERTICES[i + j].position.z / 100);
+    }
+    glEnd();
+*/
     glFlush();
 }
 

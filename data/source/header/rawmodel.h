@@ -1,15 +1,17 @@
 #include "../header/vector.h"
+#include <vector>
+
 ////////////////////////////////////////////////////////////////
 //　ベクトル3fからなるオブジェクト用のベクトル
 ////////////////////////////////////////////////////////////////
 class OBJVEC3 : public Vector3f
 {
-  public:
-    OBJVEC3();
-    OBJVEC3(float nx, float ny, float nz);
+public:
+  OBJVEC3();
+  OBJVEC3(float nx, float ny, float nz);
 
-    operator float *();
-    operator const float() const;
+  operator float *();
+  operator const float() const;
 };
 
 ////////////////////////////////////////////////////////////////
@@ -19,11 +21,11 @@ class OBJVEC3 : public Vector3f
 ////////////////////////////////////////////////////////////////
 class OBJVEC2 : public Vector2f
 {
-  public:
-    OBJVEC2();
-    OBJVEC2(float nx, float ny);
-    operator float *();
-    operator const float() const;
+public:
+  OBJVEC2();
+  OBJVEC2(float nx, float ny);
+  operator float *();
+  operator const float() const;
 };
 
 ////////////////////////////////////////////////////////////////
@@ -33,11 +35,12 @@ class OBJVEC2 : public Vector2f
 ////////////////////////////////////////////////////////////////
 class OBJVERTEX
 {
-  public:
-    OBJVEC2 texcoord;
-    OBJVEC3 normal;
-    OBJVEC3 position;
-    OBJVERTEX() {}
+public:
+  OBJVEC3 position;
+  OBJVEC2 texcoord;
+  OBJVEC3 normal;
+
+  OBJVERTEX() {}
 };
 ////////////////////////////////////////////////////////////////
 
@@ -46,11 +49,11 @@ class OBJVERTEX
 ////////////////////////////////////////////////////////////////
 class OBJSUBSET
 {
-  public:
-    unsigned int materialIndex;
-    unsigned int faceStart;
-    unsigned int faceCount;
-    OBJSUBSET() {}
+public:
+  unsigned int materialIndex;
+  unsigned int faceStart;
+  unsigned int faceCount;
+  OBJSUBSET() {}
 };
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
@@ -58,17 +61,19 @@ class OBJSUBSET
 ////////////////////////////////////////////////////////////////
 class OBJMESH
 {
-  private:
-    OBJVERTEX *m_Vertex;
-    OBJSUBSET *m_Subset;
-    unsigned int *m_Indices;
+private:
+  OBJVERTEX *m_Vertex;
+  OBJSUBSET *m_Subset;
+  unsigned int *m_Indices;
 
-    bool LoadMTLFile(const char *filename);
-    bool LoadOBJFile(const char *filename);
+  bool LoadMTLFile(const char *filename);
+  bool LoadOBJFile(const char *filename);
 
-  public:
-    bool LoadFile(const char *filename);
-    void Release();
-    void Draw();
+public:
+  std::vector<OBJVERTEX> VERTICES;
+
+  bool LoadFile(const char *filename);
+  void Release();
+  void Draw();
 };
 ////////////////////////////////////////////////////////////////
