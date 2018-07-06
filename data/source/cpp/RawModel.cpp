@@ -5,10 +5,6 @@
 #include <fstream>
 #include <string.h>
 
-#include <GL/gl.h>
-#include <GL/glut.h>
-
-#include <GL/glext.h>
 OBJVEC3::OBJVEC3() : Vector3f()
 {
 }
@@ -137,6 +133,21 @@ bool OBJMESH::LoadOBJFile(const char *filename)
     //vertex.texcoord = texcoords[i];
     VERTICES.push_back(vertex);
   }
+
+  //make vao
+  glGenVertexArrays(1, &Vertex_Array_Object);
+  glBindVertexArray(Vertex_Array_Object);
+
+  //make vbo
+  glGenBuffers(1, &Vertex_Buffer_Object);
+  glBindBuffer(GL_ARRAY_BUFFER, Vertex_Buffer_Object);
+  glBufferData(GL_ARRAY_BUFFER, VERTICES.size() * sizeof(OBJVERTEX), &VERTICES[0], GL_STATIC_DRAW);
+
+  //make ib
+  glGenBuffers(1, &Index_Buffer);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Index_Buffer);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, P_INDICES.size() * sizeof(unsigned int), &P_INDICES[0], GL_STATIC_DRAW);
+
   return true;
 }
 
@@ -154,14 +165,13 @@ bool OBJMESH::LoadFile(const char *filename)
 void OBJMESH::Draw()
 {
 
-  //glBufferData(GL_ARRAY_BUFFER, VERTICES.size() * sizeof(OBJVERTEX), &VERTICES[0], GL_STATIC_DRAW);
-  /*
-  for (unsigned int i = 0; i < 1; i++)
-  {
-    glInterleavedArrays(GL_T2F_N3F_V3F, 0, m_Vertex);
-    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, &);
-  }
-  */
+  glEnableVertexAttribArray(0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)0); //send positions on pipe 0
+
+  glBindBuffer(GL_ARRAY_BUFFER, Vertex_Buffer_Object);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Index_Buffer);
+
+  glDrawElements(GL_TRIANGLES, P_INDICES.size(), GL_UNSIGNED_INT, 0);
 }
 
 /*

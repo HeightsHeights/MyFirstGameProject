@@ -1,6 +1,15 @@
 #include "../header/vector.h"
 #include <vector>
 
+#define GL_GLEXT_PROTOTYPES 1
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_opengl.h>
+#include <SDL2/SDL_opengles2.h>
+
+#include <GL/gl.h>
+#include <GL/glut.h>
+
 ////////////////////////////////////////////////////////////////
 //　ベクトル3fからなるオブジェクト用のベクトル
 ////////////////////////////////////////////////////////////////
@@ -65,6 +74,10 @@ private:
   OBJVERTEX *m_Vertex;
   OBJSUBSET *m_Subset;
   unsigned int *m_Indices;
+
+  GLuint Vertex_Array_Object;
+  GLuint Vertex_Buffer_Object;
+  GLuint Index_Buffer;
 
   bool LoadMTLFile(const char *filename);
   bool LoadOBJFile(const char *filename);
