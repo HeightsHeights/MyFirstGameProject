@@ -13,7 +13,7 @@ bool InitSystem();
 
 bool LoadOBJ(const char *path, std::vector<float> &out_vertices, std::vector<float> &out_uvs, std::vector<float> &out_noemals);
 
-void Draw();
+void Render();
 void Clear();
 
 //*******************************************************************************************************************************************
@@ -77,6 +77,9 @@ GLfloat red[] = {0.8, 0.2, 0.2, 1.0};
 
 OBJMESH mesh;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// メイン
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
     if (!InitWindow())
@@ -98,7 +101,7 @@ int main(int argc, char *argv[])
         //glEnable(GL_DEPTH_TEST);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        Draw();
+        Render();
 
         //glDisable(GL_DEPTH_TEST);
         SDL_GL_SwapWindow(GameManager::window);
@@ -107,7 +110,9 @@ int main(int argc, char *argv[])
     Clear();
     return 0;
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ウィンドウ初期化
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool InitWindow()
 {
     //sdlの初期化
@@ -133,6 +138,10 @@ bool InitWindow()
     }
     return true;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// opengl系初期化？
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool InitGL(int argc, char *argv[])
 {
     //gl系とglut系の初期化
@@ -196,37 +205,11 @@ bool InitGL(int argc, char *argv[])
     return true;
 }
 
-void Draw()
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 描画
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void Render()
 {
-
-    mesh.Draw();
-
-    //https://stackoverflow.com/questions/19986570/interleaved-vbo-with-coords-normals-and-color
-    GLuint vao, vbo, ib;
-
-    // //make vao
-    // glGenVertexArrays(1, &vao);
-    // glBindVertexArray(vao);
-
-    // //make vbo
-    // glGenBuffers(1, &vbo);
-    // glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    // glBufferData(GL_ARRAY_BUFFER, mesh.VERTICES.size() * sizeof(OBJVERTEX), &mesh.VERTICES[0], GL_STATIC_DRAW);
-
-    // //make ib
-    // glGenBuffers(1, &ib);
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
-    // glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.P_INDICES.size() * sizeof(unsigned int), &mesh.P_INDICES[0], GL_STATIC_DRAW);
-
-    // glEnableVertexAttribArray(0);
-    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)0); //send positions on pipe 0
-
-    // glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
-
-    // //glRotated(0.01, 0, 1, 0);
-    // //glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, red);
-    // glDrawElements(GL_TRIANGLES, mesh.P_INDICES.size(), GL_UNSIGNED_INT, 0);
 
     mesh.Draw();
 

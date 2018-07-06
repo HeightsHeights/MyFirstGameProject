@@ -1,4 +1,5 @@
 #include "../header/vector.h"
+#include <stdio.h>
 #include <vector>
 
 #define GL_GLEXT_PROTOTYPES 1
