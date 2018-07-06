@@ -1,6 +1,6 @@
 //ゲームのメイン
 #include "../header/game.h"
-#include "../header/rawmodel.h"
+#include "../header/object.h"
 
 //window系の初期化
 bool InitWindow();
@@ -75,11 +75,11 @@ GLfloat light1pos[] = {5.0, 3.0, 0.0, 1.0};
 GLfloat green[] = {0.0, 1.0, 0.0, 1.0};
 GLfloat red[] = {0.8, 0.2, 0.2, 1.0};
 
-OBJMESH mesh;
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // メイン
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Player player;
+Enemy enemy;
 int main(int argc, char *argv[])
 {
     if (!InitWindow())
@@ -92,8 +92,9 @@ int main(int argc, char *argv[])
         printf("error initgl\n");
         return -1;
     }
-
     SDL_Event event;
+    // player = *new Player("data/data_3d/test.obj");
+    enemy = *new Enemy("data/data_3d/test02.obj");
     while (event.type != SDL_QUIT)
     {
         SDL_PollEvent(&event);
@@ -102,6 +103,8 @@ int main(int argc, char *argv[])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         Render();
+        //player.Draw();
+        enemy.Draw();
 
         //glDisable(GL_DEPTH_TEST);
         SDL_GL_SwapWindow(GameManager::window);
@@ -167,13 +170,7 @@ bool InitGL(int argc, char *argv[])
 
     gluLookAt(3.0, 4.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-    mesh.LoadFile("data/data_3d/plane.obj");
-
-    for (int i = 0; i < mesh.VERTICES.size() / 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-            printf("x:%fy:%fz:%f\n", mesh.VERTICES[i + j].position.x, mesh.VERTICES[i + j].position.y, mesh.VERTICES[i + j].position.z);
-    }
+    //player = Player("data/data_3d/plane.obj");
 
     //GameManager::context = SDL_GL_CreateContext(window);
     /* Enable smooth shading */
@@ -210,8 +207,6 @@ bool InitGL(int argc, char *argv[])
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Render()
 {
-
-    mesh.Draw();
 
     //マニュピレーター
     glBegin(GL_LINES);

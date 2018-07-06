@@ -5,6 +5,10 @@
 
 #include "../header/object.h"
 
+Object::Object()
+{
+}
+
 Object::Object(const char *filename)
 {
     Model.LoadFile(filename);
