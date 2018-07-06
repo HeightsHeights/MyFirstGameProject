@@ -5,99 +5,27 @@
 #include <fstream>
 #include <string.h>
 
-/*
-////////////////////////////////////////////////////////////////
-//　ベクトル3fからなるオブジェクト用のベクトル
-////////////////////////////////////////////////////////////////
-class OBJVEC3 : public Vector3f
-{
-public:
-  OBJVEC3();
-  OBJVEC3(float nx, float ny, float nz);
+#include <GL/gl.h>
+#include <GL/glut.h>
 
-  operator float *();
-  operator const float() const;
-};
-*/
+#include <GL/glext.h>
 OBJVEC3::OBJVEC3() : Vector3f()
 {
 }
 OBJVEC3::OBJVEC3(float nx, float ny, float nz) : Vector3f(nx, ny, nz)
 {
 }
-/*
-////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////
-//　ベクトル2fからなるオブジェクト用のベクトル
-////////////////////////////////////////////////////////////////
-class OBJVEC2 : public Vector2f
-{
-public:
-  OBJVEC2();
-  OBJVEC2(float nx, float ny);
-  operator float *();
-  operator const float() const;
-};
-*/
 OBJVEC2::OBJVEC2() : Vector2f()
 {
 }
 OBJVEC2::OBJVEC2(float nx, float ny) : Vector2f(nx, ny)
 {
 }
-/*
-////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////
-//　頂点情報
-////////////////////////////////////////////////////////////////
-class OBJVERTEX
-{
-public:
-  OBJVEC2 texcoord;
-  OBJVEC3 normal;
-  OBJVEC3 position;
-  OBJVERTEX() {}
-};
-////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////
-//　サブセット情報
-////////////////////////////////////////////////////////////////
-class OBJSUBSET
-{
-public:
-  unsigned int materialIndex;
-  unsigned int faceStart;
-  unsigned int faceCount;
-  OBJSUBSET() {}
-};
-////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////
-//　メッシュ情報
-////////////////////////////////////////////////////////////////
-class OBJMESH
-{
-private:
-  OBJVERTEX *m_Vertex;
-  OBJSUBSET *m_Subset;
-  unsigned int *m_Indices;
-
-  bool LoadMTLFile(const char *filename);
-  bool LoadOBJFile(const char *filename);
-
-public:
-  bool LoadFile(const char *filename);
-  void Release();
-  void Draw();
-};
-////////////////////////////////////////////////////////////////
-*/
 bool OBJMESH::LoadMTLFile(const char *filename)
 {
-  char buf[OBJ_BUFFER_LENGTH] = {0};
+  return true;
 }
 
 bool OBJMESH::LoadOBJFile(const char *filename)
@@ -112,12 +40,6 @@ bool OBJMESH::LoadOBJFile(const char *filename)
   std::vector<OBJSUBSET> t_subsets;
 
   std::vector<unsigned int> t_indices;
-
-  unsigned long total = 0;
-
-  unsigned int dwFaceIncex = 0;
-  unsigned int dwFaceCount = 0;
-  unsigned int dwCurSubset = 0;
 
   file.open(filename, std::fstream::in);
 
@@ -166,21 +88,15 @@ bool OBJMESH::LoadOBJFile(const char *filename)
     else if (0 == strcmp(buf, "f"))
     {
       unsigned int iPosition, iTexCoord, iNoemal;
-      //unsigned int p[4] = {-1}, t[4] = {-1}, n[4] = {-1};
+
       OBJVERTEX vertex;
 
-      dwFaceIncex++;
-      dwFaceCount++;
-      //int count;
       unsigned int index = 0;
       for (int iFace = 0; iFace < 3; iFace++)
       {
 
-        //count++;
-
         file >> iPosition;
         vertex.position = positions[iPosition - 1];
-        //p[iFace] = iPosition - 1;
 
         if ('/' == file.peek())
         {
@@ -191,7 +107,6 @@ bool OBJMESH::LoadOBJFile(const char *filename)
           {
             file >> iTexCoord;
             vertex.texcoord = texcoords[iTexCoord - 1];
-            //t[iFace] = iTexCoord - 1;
           }
 
           if ('/' == file.peek())
@@ -199,11 +114,11 @@ bool OBJMESH::LoadOBJFile(const char *filename)
             file.ignore();
             file >> iNoemal;
             vertex.normal = normals[iNoemal - 1];
-            //n[iFace] = iNoemal - 1;
           }
         }
 
-        t_vertices.push_back(vertex);
+        VERTICES.push_back(vertex);
+
         index = t_vertices.size() - 1;
         t_indices.push_back(index);
 
@@ -212,9 +127,9 @@ bool OBJMESH::LoadOBJFile(const char *filename)
           break;
         }
       }
-      return true;
     }
   }
+  return true;
 }
 
 bool OBJMESH::LoadFile(const char *filename)
@@ -230,11 +145,15 @@ bool OBJMESH::LoadFile(const char *filename)
 
 void OBJMESH::Draw()
 {
+
+  //glBufferData(GL_ARRAY_BUFFER, VERTICES.size() * sizeof(OBJVERTEX), &VERTICES[0], GL_STATIC_DRAW);
+  /*
   for (unsigned int i = 0; i < 1; i++)
   {
     glInterleavedArrays(GL_T2F_N3F_V3F, 0, m_Vertex);
     glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, &);
   }
+  */
 }
 
 /*

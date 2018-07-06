@@ -37,8 +37,8 @@ class OBJVERTEX
 {
 public:
   OBJVEC3 position;
-  OBJVEC2 texcoord;
   OBJVEC3 normal;
+  OBJVEC2 texcoord;
 
   OBJVERTEX() {}
 };
@@ -71,6 +71,9 @@ private:
 
 public:
   std::vector<OBJVERTEX> VERTICES;
+  std::vector<unsigned int> P_INDICES;
+  std::vector<unsigned int> N_INDICES;
+  std::vector<unsigned int> T_INDICES;
 
   bool LoadFile(const char *filename);
   void Release();

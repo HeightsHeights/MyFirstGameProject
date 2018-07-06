@@ -158,7 +158,7 @@ bool InitGL(int argc, char *argv[])
 
     gluLookAt(3.0, 4.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-    mesh.LoadFile("data/data_3d/test.obj");
+    mesh.LoadFile("data/data_3d/plane.obj");
 
     for (int i = 0; i < mesh.VERTICES.size() / 3; i++)
     {
@@ -201,20 +201,46 @@ void Draw()
 
     mesh.Draw();
 
-    GLuint vbo;
+    //https://stackoverflow.com/questions/19986570/interleaved-vbo-with-coords-normals-and-color
+    GLuint vao, vbo, ib;
+
+    //make vao
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    //make vbo
     glGenBuffers(1, &vbo);
-
-    // バッファをバインドする
-
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
     glBufferData(GL_ARRAY_BUFFER, mesh.VERTICES.size() * sizeof(OBJVERTEX), &mesh.VERTICES[0], GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glVertexPointer(3, GL_FLOAT, 0, 0);
-    glColor4ub(255, 255, 255, 255);
-    glDrawArrays(GL_TRIANGLES, 0, 12);
+    glGenBuffers(1, &ib);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.INDICES.size() * sizeof(unsigned int), &mesh.INDICES[0], GL_STATIC_DRAW);
 
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)0); //send positions on pipe 0
+    /*
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)(sizeof(float) * 3)); //send normals on pipe 1
+    */
+    /*
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)(6 * sizeof(float)));
+    */
+    //glBindVertexArray(vao);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
+    glDrawElements(GL_TRIANGLES, mesh.INDICES.size(), GL_UNSIGNED_INT, 0);
+
+    /*
+    glRotated(0.01, 0, 1, 0);
+    for (int i = 0; i < 36; i++)
+    {
+        glDrawArrays(GL_LINE_LOOP, i, 3);
+    }
+    */
     glBegin(GL_LINES);
     for (int i = 0; i < 3; i++)
     {
@@ -243,14 +269,18 @@ void Draw()
     glEnd();
     */
     /*
-    glBegin(GL_TRIANGLE_FAN);
-    for (int i = 0; i < mesh.VERTICES.size() / 3; i++)
+    glRotated(0.01, 0, 1, 0);
+    for (int i = 0; i < mesh.VERTICES.size(); i += 3)
     {
-        for (int j = 0; j < 3; j++)
-            glVertex3f(mesh.VERTICES[i + j].position.x / 100, mesh.VERTICES[i + j].position.y / 100, mesh.VERTICES[i + j].position.z / 100);
+        glBegin(GL_TRIANGLES);
+
+        glVertex3f(mesh.VERTICES[i + 0].position.x, mesh.VERTICES[i + 0].position.y, mesh.VERTICES[i + 0].position.z);
+        glVertex3f(mesh.VERTICES[i + 1].position.x, mesh.VERTICES[i + 1].position.y, mesh.VERTICES[i + 1].position.z);
+        glVertex3f(mesh.VERTICES[i + 2].position.x, mesh.VERTICES[i + 2].position.y, mesh.VERTICES[i + 2].position.z);
+
+        glEnd();
     }
-    glEnd();
-*/
+    */
     glFlush();
 }
 

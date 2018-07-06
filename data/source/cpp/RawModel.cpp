@@ -36,13 +36,12 @@ bool OBJMESH::LoadOBJFile(const char *filename)
   std::vector<OBJVEC3> positions;
   std::vector<OBJVEC3> normals;
   std::vector<OBJVEC2> texcoords;
+
   std::vector<OBJVERTEX> t_vertices;
   std::vector<OBJSUBSET> t_subsets;
 
-  std::vector<unsigned int> t_indices;
-
+  //ファイルを開ける
   file.open(filename, std::fstream::in);
-
   if (!file.is_open())
   {
     printf("error file_open\n");
@@ -51,7 +50,10 @@ bool OBJMESH::LoadOBJFile(const char *filename)
 
   while (1)
   {
+    //読み込み
     file >> buf;
+
+    //閉じる
     if (!file)
     {
       printf("a\n");
@@ -59,9 +61,10 @@ bool OBJMESH::LoadOBJFile(const char *filename)
     }
     if (0 == strcmp(buf, "#"))
     {
-
       //コメント
     }
+
+    //頂点情報
     else if (0 == strcmp(buf, "v"))
     {
       //頂点座標
@@ -85,18 +88,19 @@ bool OBJMESH::LoadOBJFile(const char *filename)
       file >> x >> y >> z;
       normals.push_back(OBJVEC3(x, y, z));
     }
+
+    //インデックス情報
     else if (0 == strcmp(buf, "f"))
     {
-      unsigned int iPosition, iTexCoord, iNoemal;
-
-      OBJVERTEX vertex;
+      unsigned int iPosition, iTexCoord, iNormal;
 
       unsigned int index = 0;
       for (int iFace = 0; iFace < 3; iFace++)
       {
 
         file >> iPosition;
-        vertex.position = positions[iPosition - 1];
+
+        P_INDICES.push_back(iPosition - 1);
 
         if ('/' == file.peek())
         {
@@ -106,28 +110,32 @@ bool OBJMESH::LoadOBJFile(const char *filename)
           if ('/' != file.peek())
           {
             file >> iTexCoord;
-            vertex.texcoord = texcoords[iTexCoord - 1];
+            T_INDICES.push_back(iTexCoord - 1);
           }
 
           if ('/' == file.peek())
           {
             file.ignore();
-            file >> iNoemal;
-            vertex.normal = normals[iNoemal - 1];
+            file >> iNormal;
+            N_INDICES.push_back(iNormal - 1);
           }
         }
 
-        VERTICES.push_back(vertex);
-
-        index = t_vertices.size() - 1;
-        t_indices.push_back(index);
-
+        //改行
         if ('\n' == file.peek())
         {
           break;
         }
       }
     }
+  }
+  for (int i = 0; i < positions.size(); i++)
+  {
+    OBJVERTEX vertex;
+    vertex.position = positions[i];
+    vertex.normal = normals[i];
+    //vertex.texcoord = texcoords[i];
+    VERTICES.push_back(vertex);
   }
   return true;
 }

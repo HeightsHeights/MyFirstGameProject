@@ -128,7 +128,7 @@ int main()
   Vector3f v1(1.0f, 1.0f, 0.0f);
   Vector3f v2(3.0f, 0.0f, 1.0f);
 
-  Vector3f v3 = -v2;
+  Vector3f v3 = -v2 * 2 + v1;
   printf("x:%f,y:%f,z:%f\n", v3.x, v3.y, v3.z);
   printf("m:%f\n", v3.magnitude());
   return 0;

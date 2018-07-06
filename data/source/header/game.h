@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <vector>
 
+#define GL_GLEXT_PROTOTYPES 1
+
 //sdl関係
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
