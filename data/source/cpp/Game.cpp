@@ -167,7 +167,7 @@ bool InitGL(int argc, char *argv[])
 
     gluLookAt(3.0, 4.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-    mesh.LoadFile("data/data_3d/test.obj");
+    mesh.LoadFile("data/data_3d/plane.obj");
 
     for (int i = 0; i < mesh.VERTICES.size() / 3; i++)
     {

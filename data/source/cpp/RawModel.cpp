@@ -29,6 +29,53 @@ OBJVEC2::OBJVEC2(float nx, float ny) : Vector2f(nx, ny)
 
 bool OBJMESH::LoadMTLFile(const char *filename)
 {
+  std::ifstream file;
+  char buf[OBJ_BUFFER_LENGTH] = {0};
+
+  //ファイルを開ける
+  file.open(filename, std::fstream::in);
+  if (!file.is_open())
+  {
+    printf("error file_open\n");
+    return false;
+  }
+
+  while (1)
+  {
+    file >> buf;
+
+    if (0 == strcmp(buf, "newmtl"))
+    {
+    }
+    else if (0 == strcmp(buf, "Ka"))
+    {
+    }
+    else if (0 == strcmp(buf, "Kb"))
+    {
+    }
+    else if (0 == strcmp(buf, "Ks"))
+    {
+    }
+    else if (0 == strcmp(buf, "d"))
+    {
+    }
+    else if (0 == strcmp(buf, "Ns"))
+    {
+    }
+    else if (0 == strcmp(buf, "map_Ka"))
+    {
+    }
+    else if (0 == strcmp(buf, "map_Kd"))
+    {
+    }
+    else if (0 == strcmp(buf, "map_Ks"))
+    {
+    }
+    else if (0 == strcmp(buf, "map_Bump"))
+    {
+    }
+  }
+
   return true;
 }
 
