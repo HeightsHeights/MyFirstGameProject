@@ -1,6 +1,7 @@
 //ゲームのメイン
 #include "../header/game.h"
 #include "../header/object.h"
+#include "../header/controller.h"
 
 //window系の初期化
 bool InitWindow();
@@ -92,6 +93,8 @@ int main(int argc, char *argv[])
         printf("error initgl\n");
         return -1;
     }
+    Controller_Maneger::Init_Controller();
+
     SDL_Event event;
     player = *new Player("data/data_3d/test.obj");
     //enemy = *new Enemy("data/data_3d/test02.obj");
@@ -119,7 +122,7 @@ int main(int argc, char *argv[])
 bool InitWindow()
 {
     //sdlの初期化
-    if (SDL_Init(SDL_INIT_VIDEO))
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK))
     {
         printf("error sdlinit\n");
         return false;
@@ -169,7 +172,6 @@ bool InitGL(int argc, char *argv[])
     glTranslated(0.0, 0.0, -5.0);
 
     gluLookAt(3.0, 4.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-
 
     //GameManager::context = SDL_GL_CreateContext(window);
     /* Enable smooth shading */

@@ -1,7 +1,8 @@
 {
     "files.associations": {
         "vector": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "array": "c"
     },
     "editor.formatOnSave": true
 }

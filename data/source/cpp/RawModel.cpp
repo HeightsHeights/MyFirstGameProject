@@ -123,7 +123,7 @@ bool OBJMESH::LoadOBJFile(const char *filename)
       //頂点座標
       float x, y, z;
       file >> x >> y >> z;
-      printf("x:%fy:%fz:%f\n", x, y, z);
+      //printf("x:%fy:%fz:%f\n", x, y, z);
       OBJVEC3 v(x, y, z);
       positions.push_back(v);
     }

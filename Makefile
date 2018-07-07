@@ -4,7 +4,8 @@ Game:
 	g++ ./data/source/cpp/RawModel.cpp  -g -c
 	g++ ./data/source/cpp/Object.cpp -c -g
 	g++ ./data/source/cpp/Chara.cpp  -g -c
-	g++ -o Game Game.o Chara.o Object.o RawModel.o Vector.o -lSDL2 -lGL -lglut -lGLU -Wl,-rpath,/usr/local/lib
+	g++ ./data/source/cpp/Controller.cpp  -g -c
+	g++ -o Game Game.o Controller.o Chara.o Object.o RawModel.o Vector.o -lSDL2 -lGL -lglut -lGLU -Wl,-rpath,/usr/local/lib
 	rm -f ./*.o
 
 Vector:

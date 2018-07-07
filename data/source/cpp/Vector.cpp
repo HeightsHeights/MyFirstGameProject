@@ -95,6 +95,12 @@ Vector3f Vector3f::Matrix_multiplication(float matrix[3][3])
   ret.z = matrix[2][0] * x + matrix[2][1] * y + matrix[2][2] * z;
   return ret;
 }
+
+Vector3f Vector3f::Scaling(Vector3f scale_vector)
+{
+  return *new Vector3f(x * scale_vector.x, y * scale_vector.y, z * scale_vector.z);
+}
+
 //ベクトル回転
 Vector3f Vector3f::Rotate(Vector3f v, float angle)
 {

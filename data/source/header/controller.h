@@ -1,54 +1,56 @@
 #include <SDL2/SDL.h>
 #include <vector>
+
 /////////////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////////////
-class Controller_Maneger
+class Controller_State
 {
-  private:
-    static SDL_Event event;
-    static unsigned int num_of_joystic;
+private:
+public:
+  int Rx_axis;
+  int Ry_axis;
+  int Lx_axis;
+  int Ly_axis;
+  bool button_shoot_decition;
+  bool button_shift_back;
+  bool button_bomb;
+  bool button_forward;
+  bool button_pause;
 
-  public:
-    static std::vector<Controller_Joystic> Joystics;
-
-    Controller_Maneger();
-
-    static bool Init_Controller();
-    static void Update_Controller();
-    static void Clear_Controller();
+  Controller_State();
 };
 /////////////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////////////
 class Controller_Joystic
 {
-  private:
-    SDL_Joystick *joystick;
+private:
+  SDL_Joystick *joystick;
 
-  public:
-    Controller_Joystic();
-    Controller_Joystic(const int j_id);
-    SDL_Joystick *get_joystic_pointer();
-    void Read_State_Controller();
-    Controller_State state;
+public:
+  Controller_Joystic();
+  Controller_Joystic(const int j_id);
+  SDL_Joystick *get_joystic_pointer();
+  void Read_State_Controller();
+  Controller_State state;
 };
 /////////////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////////////
-class Controller_State
+class Controller_Maneger
 {
-  private:
-  public:
-    int Rx_axis = 0;
-    int Ry_axis = 0;
-    int Lx_axis = 0;
-    int Ly_axis = 0;
-    bool button_shoot_decition = false;
-    bool button_shift_back = false;
-    bool button_bomb = false;
-    bool button_forward = false;
-    bool button_pause = false;
+private:
+  static SDL_atomic_t atm;
+  static SDL_Event event;
+  static unsigned int num_of_joystic;
 
-    Controller_State();
+public:
+  static std::vector<Controller_Joystic> Joystics;
+
+  Controller_Maneger();
+
+  static bool Init_Controller();
+  static int Update_Controller(void *data);
+  static void Clear_Controller();
 };
