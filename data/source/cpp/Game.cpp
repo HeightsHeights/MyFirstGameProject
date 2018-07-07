@@ -2,6 +2,8 @@
 #include "../header/game.h"
 #include "../header/object.h"
 #include "../header/controller.h"
+#include "../header/audio.h"
+#include "../header/ui_image.h"
 
 //window系の初期化
 bool InitWindow();
@@ -122,7 +124,7 @@ int main(int argc, char *argv[])
 bool InitWindow()
 {
     //sdlの初期化
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK))
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK))
     {
         printf("error sdlinit\n");
         return false;

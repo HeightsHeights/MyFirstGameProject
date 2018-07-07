@@ -53,6 +53,7 @@ int Controller_Maneger::Update_Controller(void *data)
         {
             SDL_AtomicDecRef((SDL_atomic_t *)data);
         }
+        SDL_Delay(4);
     }
 
     return 0;
@@ -81,8 +82,8 @@ SDL_Joystick *Controller_Joystic::get_joystic_pointer()
 
 void Controller_Joystic::Read_State_Controller()
 {
-    // 軸0 (X)
-    state.Lx_axis = SDL_JoystickGetAxis(joystick, 0) / MAX_JOYSTIC_AXIS;
+    // L軸0 (X)
+    state.Lx_axis = SDL_JoystickGetAxis(joystick, 0) / (float)MAX_JOYSTIC_AXIS;
 
     if (state.Lx_axis > 1)
     {
@@ -93,8 +94,8 @@ void Controller_Joystic::Read_State_Controller()
         state.Lx_axis = -1;
     }
 
-    // 軸1 (Y)
-    state.Ly_axis = SDL_JoystickGetAxis(joystick, 1) / MAX_JOYSTIC_AXIS;
+    // L軸1 (Y)
+    state.Ly_axis = SDL_JoystickGetAxis(joystick, 1) / (float)MAX_JOYSTIC_AXIS;
 
     if (state.Ly_axis > 1)
     {
@@ -103,6 +104,50 @@ void Controller_Joystic::Read_State_Controller()
     else if (state.Ly_axis < -1)
     {
         state.Ly_axis = -1;
+    }
+
+    // R軸0 (X)
+    state.Rx_axis = SDL_JoystickGetAxis(joystick, 2) / (float)MAX_JOYSTIC_AXIS;
+
+    if (state.Rx_axis > 1)
+    {
+        state.Rx_axis = 1;
+    }
+    else if (state.Rx_axis < -1)
+    {
+        state.Rx_axis = -1;
+    }
+
+    // R軸1 (Y)
+    state.Ry_axis = SDL_JoystickGetAxis(joystick, 3) / (float)MAX_JOYSTIC_AXIS;
+
+    if (state.Ry_axis > 1)
+    {
+        state.Ry_axis = 1;
+    }
+    else if (state.Ry_axis < -1)
+    {
+        state.Ry_axis = -1;
+    }
+
+    printf("Lx:%4f Ly:%4f Rx:%4f Ry:%4f\n", state.Lx_axis, state.Ly_axis, state.Rx_axis, state.Ry_axis);
+
+    if (SDL_JoystickGetButton(joystick, 5) > 0)
+    {
+        state.button_shoot_decition = true;
+    }
+    else
+    {
+        state.button_shoot_decition = false;
+    }
+
+    if (SDL_JoystickGetButton(joystick, 4) > 0)
+    {
+        state.button_shift_back = true;
+    }
+    else
+    {
+        state.button_shift_back = false;
     }
 
     if (SDL_JoystickGetButton(joystick, 11) > 0)

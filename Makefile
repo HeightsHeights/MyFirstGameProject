@@ -5,7 +5,9 @@ Game:
 	g++ ./data/source/cpp/Object.cpp -c -g
 	g++ ./data/source/cpp/Chara.cpp  -g -c
 	g++ ./data/source/cpp/Controller.cpp  -g -c
-	g++ -o Game Game.o Controller.o Chara.o Object.o RawModel.o Vector.o -lSDL2 -lGL -lglut -lGLU -Wl,-rpath,/usr/local/lib
+	g++ ./data/source/cpp/Audio.cpp  -g -c
+	g++ ./data/source/cpp/UI_Image.cpp  -g -c
+	g++ -o Game Game.o UI_Image.o Audio.o Controller.o Chara.o Object.o RawModel.o Vector.o -lSDL2 -lSDL2_image -lSDL2_mixer -lGL -lglut -lGLU -Wl,-rpath,/usr/local/lib
 	rm -f ./*.o
 
 Vector:

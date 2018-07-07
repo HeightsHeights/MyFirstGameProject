@@ -8,10 +8,10 @@ class Controller_State
 {
 private:
 public:
-  int Rx_axis;
-  int Ry_axis;
-  int Lx_axis;
-  int Ly_axis;
+  float Rx_axis;
+  float Ry_axis;
+  float Lx_axis;
+  float Ly_axis;
   bool button_shoot_decition;
   bool button_shift_back;
   bool button_bomb;
