@@ -78,8 +78,8 @@ GLfloat red[] = {0.8, 0.2, 0.2, 1.0};
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // メイン
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Player player;
-Enemy enemy;
+Player player;
+//Enemy enemy;
 int main(int argc, char *argv[])
 {
     if (!InitWindow())
@@ -93,8 +93,8 @@ int main(int argc, char *argv[])
         return -1;
     }
     SDL_Event event;
-    // player = *new Player("data/data_3d/test.obj");
-    enemy = *new Enemy("data/data_3d/test02.obj");
+    player = *new Player("data/data_3d/test.obj");
+    //enemy = *new Enemy("data/data_3d/test02.obj");
     while (event.type != SDL_QUIT)
     {
         SDL_PollEvent(&event);
@@ -103,8 +103,8 @@ int main(int argc, char *argv[])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         Render();
-        //player.Draw();
-        enemy.Draw();
+        player.Draw();
+        //enemy.Draw();
 
         //glDisable(GL_DEPTH_TEST);
         SDL_GL_SwapWindow(GameManager::window);
