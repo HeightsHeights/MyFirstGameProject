@@ -170,7 +170,6 @@ bool InitGL(int argc, char *argv[])
 
     gluLookAt(3.0, 4.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-    //player = Player("data/data_3d/plane.obj");
 
     //GameManager::context = SDL_GL_CreateContext(window);
     /* Enable smooth shading */

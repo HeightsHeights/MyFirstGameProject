@@ -71,7 +71,7 @@ float Vector3f::magnitude()
 {
   return (float)sqrt(magnitude_second_power());
 }
-//単位ベクトル」
+//単位ベクトル
 Vector3f Vector3f::normalize()
 {
   float m = magnitude();

@@ -110,7 +110,6 @@ bool OBJMESH::LoadOBJFile(const char *filename)
     //閉じる
     if (!file)
     {
-      printf("a\n");
       break;
     }
     if (0 == strcmp(buf, "#"))
