@@ -1,0 +1,10 @@
+In file included from /usr/include/SDL2/SDL_mixer.h:31:0,
+                 from ./data/source/cpp/Game.cpp:8:
+/usr/include/SDL2/SDL_version.h:56:3: error: conflicting declaration ‘typedef int SDL_version’
+ } SDL_version;
+   ^
+In file included from /usr/local/include/SDL2/SDL.h:58:0,
+                 from ./data/source/cpp/../header/game.h:8,
+                 from ./data/source/cpp/Game.cpp:2:
+/usr/local/include/SDL2/SDL_version.h:56:3: note: previous declaration as ‘typedef struct SDL_version SDL_version’
+ } SDL_version;
