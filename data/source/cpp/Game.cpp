@@ -15,8 +15,6 @@ bool InitAudio();
 //システム全体の初期化
 bool InitSystem();
 
-bool LoadOBJ(const char *path, std::vector<float> &out_vertices, std::vector<float> &out_uvs, std::vector<float> &out_noemals);
-
 void Render();
 void Clear();
 
@@ -35,43 +33,6 @@ GLfloat manupilator_color[][4] = {
     {1.0f, 0.0f, 0.0f, 0.0f},
     {0.0f, 1.0f, 0.0f, 0.0f},
     {0.0f, 0.0f, 1.0f, 0.0f}};
-
-//*******************************************************************************************************************************************
-
-GLdouble vertex[][3] = {
-    {0.0, 0.0, 0.0},
-    {1.0, 0.0, 0.0},
-    {1.0, 1.0, 0.0},
-    {0.0, 1.0, 0.0},
-    {0.0, 0.0, 1.0},
-    {1.0, 0.0, 1.0},
-    {1.0, 1.0, 1.0},
-    {0.0, 1.0, 1.0}};
-
-int face[][4] = {
-    {0, 1, 2, 3},
-    {1, 5, 6, 2},
-    {5, 4, 7, 6},
-    {4, 0, 3, 7},
-    {4, 5, 1, 0},
-    {3, 2, 6, 7}};
-
-GLdouble color[][3] = {
-    {1.0, 0.0, 0.0}, /* 赤 */
-    {0.0, 1.0, 0.0}, /* 緑 */
-    {0.0, 0.0, 1.0}, /* 青 */
-    {1.0, 1.0, 0.0}, /* 黄 */
-    {1.0, 0.0, 1.0}, /* マゼンタ */
-    {0.0, 1.0, 1.0}  /* シアン 　*/
-};
-
-GLdouble normal[][3] = {
-    {0.0, 0.0, -1.0},
-    {1.0, 0.0, 0.0},
-    {0.0, 0.0, 1.0},
-    {-1.0, 0.0, 0.0},
-    {0.0, -1.0, 0.0},
-    {0.0, 1.0, 0.0}};
 
 GLfloat light0pos[] = {0.0, 3.0, 5.0, 1.0};
 GLfloat light1pos[] = {5.0, 3.0, 0.0, 1.0};
@@ -99,13 +60,13 @@ int main(int argc, char *argv[])
     Controller_Maneger::Init_Controller();
 
     SDL_Event event;
-    player = *new Player("data/data_3d/test02.obj");
-    //enemy = *new Enemy("data/data_3d/test02.obj");
+    player = *new Player("data/data_3d/untitled.obj");
+    enemy = *new Enemy("data/data_3d/test03.obj");
     while (event.type != SDL_QUIT)
     {
         SDL_PollEvent(&event);
         glClearColor(0.f, 0.f, 0.f, 0.f);
-        //glEnable(GL_DEPTH_TEST);
+
         glDepthFunc(GL_LESS);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -114,7 +75,6 @@ int main(int argc, char *argv[])
         player.Draw();
         //enemy.Draw();
 
-        //glDisable(GL_DEPTH_TEST);
         SDL_GL_SwapWindow(GameManager::window);
         SDL_Delay(4);
     }
@@ -191,9 +151,9 @@ bool InitGL(int argc, char *argv[])
 
     /* Enables Depth Testing */
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
 
-    glCullFace(GL_FRONT);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
@@ -201,8 +161,9 @@ bool InitGL(int argc, char *argv[])
     glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
     glLightfv(GL_LIGHT1, GL_SPECULAR, green);
 
+    glEnable(GL_COLOR_MATERIAL);
     /* The Type Of Depth Test To Do */
-    //glDepthFunc(GL_LEQUAL);
+    glDepthFunc(GL_LEQUAL);
 
     /* Really Nice Perspective Calculations */
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);

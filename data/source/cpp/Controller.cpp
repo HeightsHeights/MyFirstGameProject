@@ -3,7 +3,6 @@
 #define MAX_JOYSTIC_AXIS 32767
 
 SDL_atomic_t Controller_Maneger::atm;
-SDL_Event Controller_Maneger::event;
 unsigned int Controller_Maneger::num_of_joystic;
 std::vector<Controller_Joystic> Controller_Maneger::Joystics;
 

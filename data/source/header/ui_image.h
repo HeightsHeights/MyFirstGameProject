@@ -25,7 +25,7 @@ private:
 public:
   UI_image();
   UI_image(const char *filename);
-  UI_image(const char *filename, int division_number);
+  UI_image(const char *filename, const int division_number);
 
   void Draw();
 };

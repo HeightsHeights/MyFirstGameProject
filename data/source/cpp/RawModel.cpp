@@ -24,6 +24,17 @@ OBJVEC2::OBJVEC2(float nx, float ny) : Vector2f(nx, ny)
 {
 }
 
+OBJCOLOR::OBJCOLOR()
+{
+}
+
+OBJCOLOR::OBJCOLOR(GLubyte cr, GLubyte cg, GLubyte cb)
+{
+  r = cr;
+  g = cg;
+  b = cb;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // マテリアル
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -188,6 +199,7 @@ bool OBJMESH::LoadOBJFile(const char *filename)
     OBJVERTEX vertex;
     vertex.position = positions[i];
     vertex.normal = normals[i];
+    vertex.color = *new OBJCOLOR(255, 255, 0);
     //vertex.texcoord = texcoords[i];
     VERTICES.push_back(vertex);
   }
@@ -212,7 +224,9 @@ bool OBJMESH::LoadOBJFile(const char *filename)
   glEnableVertexAttribArray(0);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)0); //send positions on pipe 0
   glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)(sizeof(float) * 3)); //send normals on pipe 1
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)(sizeof(OBJVEC3))); //send normals on pipe 1
+  glEnableVertexAttribArray(2);
+  glVertexAttribPointer(2, 3, GL_UNSIGNED_BYTE, GL_FALSE, sizeof(OBJVERTEX), (void *)(sizeof(OBJVEC3) * 2));
 
   glBindVertexArray(0);
   return true;
@@ -237,6 +251,7 @@ bool OBJMESH::LoadFile(const char *filename)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void OBJMESH::Draw()
 {
+
   //http://marina.sys.wakayama-u.ac.jp/~tokoi/?date=20080830
   //glEnableClientState(GL_VERTEX_ARRAY);
   //glEnableClientState(GL_NORMAL_ARRAY);

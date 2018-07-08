@@ -42,7 +42,6 @@ class Controller_Maneger
 {
 private:
   static SDL_atomic_t atm;
-  static SDL_Event event;
   static unsigned int num_of_joystic;
 
 public:
