@@ -99,18 +99,20 @@ int main(int argc, char *argv[])
     Controller_Maneger::Init_Controller();
 
     SDL_Event event;
-    player = *new Player("data/data_3d/test.obj");
-    enemy = *new Enemy("data/data_3d/test02.obj");
+    player = *new Player("data/data_3d/test02.obj");
+    //enemy = *new Enemy("data/data_3d/test02.obj");
     while (event.type != SDL_QUIT)
     {
         SDL_PollEvent(&event);
         glClearColor(0.f, 0.f, 0.f, 0.f);
         //glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LESS);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         Render();
+        glRotated(0.05, 0, 1, 0);
         player.Draw();
-        enemy.Draw();
+        //enemy.Draw();
 
         //glDisable(GL_DEPTH_TEST);
         SDL_GL_SwapWindow(GameManager::window);
