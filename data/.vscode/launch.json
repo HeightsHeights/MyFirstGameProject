@@ -8,12 +8,17 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "enter program name, for example ${workspaceFolder}/a.out",
+            "program": "${workspaceFolder}/Game",
             "args": [],
-            "stopAtEntry": false,
+            "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": true,
+            "environment": [
+                {
+                    "name": "SHELL",
+                    "value": "/bin/bash"
+                }
+            ],
+            "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
                 {
@@ -21,7 +26,8 @@
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
-            ]
+            ],
+            "preLaunchTask": "build Game"
         }
     ]
 }

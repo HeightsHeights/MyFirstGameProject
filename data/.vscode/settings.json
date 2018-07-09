@@ -1,10 +1,4 @@
 {
-    "files.associations": {
-        "vector": "cpp",
-        "*.ipp": "cpp",
-        "array": "c",
-        "iosfwd": "cpp"
-    },
     "C_Cpp.clang_format_fallbackStyle": "{BasedOnStyle: WebKit, IndentWidth: 4, AlignConsecutiveAssignments: true, DerivePointerAlignment: true, AllowShortFunctionsOnASingleLine: Inline, AlignTrailingComments: true}",
     "editor.cursorStyle": "block",
     "editor.formatOnSave": true,
