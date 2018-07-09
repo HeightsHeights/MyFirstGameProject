@@ -38,7 +38,7 @@ GLfloat manupilator_color[][4] = {
     { 0.0f, 0.0f, 1.0f, 0.0f }
 };
 
-float light0_position[4] = { 0.0, 10000.0, 0.0, 1.0 };
+float light0_position[4] = { 0.0, 1000.0, 0.0, 1.0 };
 GLfloat light1pos[]      = { 5.0, 3.0, 0.0, 1.0 };
 
 GLfloat green[] = { 0.0, 1.0, 0.0, 1.0 };
@@ -76,12 +76,17 @@ int main(int argc, char *argv[])
 
         Render();
         glRotated(0.05, 0, 1, 0);
+        static const GLfloat diffuse[] = { 0.6f, 0.1f, 0.1f, 1.0f };
 
-        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, green);
+        static const GLfloat specular[] = { 0.3f, 0.3f, 0.3f, 1.0f };
+        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, diffuse);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
+        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 100.0f);
+
         player.Draw();
         //enemy.Draw();
         //glColor3f(255, 0, 0);
-        glutSolidSphere(1, 10, 10);
+        //glutSolidSphere(1, 10, 10);
 
         shader.stop();
 
@@ -164,11 +169,11 @@ bool InitGL(int argc, char *argv[])
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    // glEnable(GL_LIGHT1);
-    // glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
-    // glLightfv(GL_LIGHT1, GL_SPECULAR, green);
+    glEnable(GL_LIGHT1);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, green);
 
-    //glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_COLOR_MATERIAL);
     /* The Type Of Depth Test To Do */
     //glDepthFunc(GL_LEQUAL);
 

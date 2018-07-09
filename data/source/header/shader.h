@@ -9,9 +9,9 @@ private:
     GLuint vertexShaderID;
     GLuint fragmentShaderID;
 
-    static unsigned long getFileLength(std::ifstream &file);
-    static int loadShaderFile(const char *filename, GLchar **ShaderSource, unsigned long *len);
-    static int unloadshader(GLbyte **ShaderSource);
+    // static unsigned long getFileLength(std::ifstream &file);
+    // static int loadShaderFile(const char *filename, GLchar **ShaderSource, unsigned long *len);
+    // static int unloadshader(GLbyte **ShaderSource);
 
     static GLuint loadShader(const char *file, int type);
 

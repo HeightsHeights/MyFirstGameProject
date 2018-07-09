@@ -16,58 +16,58 @@ ShaderManager::ShaderManager(const char* vertex_filename, const char* fragment_f
     glLinkProgram(programID);
     glValidateProgram(programID);
 }
-/////////////////////////////////////////////
-unsigned long ShaderManager::getFileLength(std::ifstream& file)
-{
-    if (!file.good())
-        return 0;
+// /////////////////////////////////////////////
+// unsigned long ShaderManager::getFileLength(std::ifstream& file)
+// {
+//     if (!file.good())
+//         return 0;
 
-    unsigned long pos = file.tellg();
-    file.seekg(0, std::ios::end);
-    unsigned long len = file.tellg();
-    file.seekg(std::ios::beg);
+//     unsigned long pos = file.tellg();
+//     file.seekg(0, std::ios::end);
+//     unsigned long len = file.tellg();
+//     file.seekg(std::ios::beg);
 
-    return len;
-}
+//     return len;
+// }
 
-int ShaderManager::loadShaderFile(const char* filename, GLchar** ShaderSource, unsigned long* len)
-{
-    std::ifstream file;
-    file.open(filename, std::ios::in); // opens as ASCII!
-    if (!file)
-        return -1;
+// int ShaderManager::loadShaderFile(const char* filename, GLchar** ShaderSource, unsigned long* len)
+// {
+//     std::ifstream file;
+//     file.open(filename, std::ios::in); // opens as ASCII!
+//     if (!file)
+//         return -1;
 
-    *len = getFileLength(file);
+//     *len = getFileLength(file);
 
-    if (len == 0)
-        return -2; // Error: Empty File
+//     if (len == 0)
+//         return -2; // Error: Empty File
 
-    *ShaderSource = (GLchar*)new char[*len + 1];
-    if (*ShaderSource == 0)
-        return -3; // can't reserve memory
+//     *ShaderSource = (GLchar*)new char[*len + 1];
+//     if (*ShaderSource == 0)
+//         return -3; // can't reserve memory
 
-    *ShaderSource[*len] = 0;
+//     *ShaderSource[*len] = 0;
 
-    unsigned int i = 0;
-    while (file.good()) {
-        *ShaderSource[i] = file.get(); // get character from file.
-        if (!file.eof())
-            i++;
-    }
+//     unsigned int i = 0;
+//     while (file.good()) {
+//         *ShaderSource[i] = file.get(); // get character from file.
+//         if (!file.eof())
+//             i++;
+//     }
 
-    *ShaderSource[i] = 0; // 0-terminate it at the correct position
+//     *ShaderSource[i] = 0; // 0-terminate it at the correct position
 
-    file.close();
+//     file.close();
 
-    return 0; // No Error
-}
+//     return 0; // No Error
+// }
 
-int ShaderManager::unloadshader(GLbyte** ShaderSource)
-{
-    if (*ShaderSource != 0)
-        delete[] * ShaderSource;
-    *ShaderSource = 0;
-}
+// int ShaderManager::unloadshader(GLbyte** ShaderSource)
+// {
+//     if (*ShaderSource != 0)
+//         delete[] * ShaderSource;
+//     *ShaderSource = 0;
+// }
 
 /////////////////////////////////////////////
 void ShaderManager::start()
