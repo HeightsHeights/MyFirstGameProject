@@ -14,6 +14,11 @@ OBJVEC3::OBJVEC3()
     : Vector3f()
 {
 }
+
+OBJVEC3::OBJVEC3(Vector3f v)
+    : Vector3f(v.x, v.y, v.z)
+{
+}
 OBJVEC3::OBJVEC3(float nx, float ny, float nz)
     : Vector3f(nx, ny, nz)
 {
@@ -125,7 +130,8 @@ bool OBJMESH::LoadOBJFile(const char *filename)
             //法線ベクトル
             float x, y, z;
             file >> x >> y >> z;
-            normals.push_back(OBJVEC3(x, y, z));
+            normals.push_back(OBJVEC3(OBJVEC3(x, y, z).normalize()));
+            NORMALS.push_back(OBJVEC3(OBJVEC3(x, y, z).normalize()));
         }
 
         //インデックス情報
@@ -166,7 +172,7 @@ bool OBJMESH::LoadOBJFile(const char *filename)
         OBJVERTEX vertex;
         vertex.position = positions[i];
         vertex.normal   = normals[i];
-        vertex.color    = *new OBJCOLOR(255, 255, 0);
+        vertex.color    = *new OBJVEC3(255, 255, 0);
         //vertex.texcoord = texcoords[i];
         VERTICES.push_back(vertex);
     }
@@ -180,20 +186,27 @@ bool OBJMESH::LoadOBJFile(const char *filename)
     glBindBuffer(GL_ARRAY_BUFFER, Vertex_Buffer_Object);
     glBufferData(GL_ARRAY_BUFFER, VERTICES.size() * sizeof(OBJVERTEX), &VERTICES[0], GL_STATIC_DRAW);
 
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)0); //send positions on pipe 0
+    // glEnableVertexAttribArray(2);
+    // glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)(sizeof(OBJVEC3))); //send normals on pipe 1
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)(sizeof(OBJVEC3) * 2));
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glGenBuffers(1, &Normal_Buffer_Object);
+    glBindBuffer(GL_ARRAY_BUFFER, Normal_Buffer_Object);
+    glBufferData(GL_ARRAY_BUFFER, NORMALS.size() * sizeof(OBJVEC3), &NORMALS[0], GL_STATIC_DRAW);
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void *)0); //send normals on pipe 1
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
     //make ib
     glGenBuffers(1, &Index_Buffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Index_Buffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, P_INDICES.size() * sizeof(unsigned int), &P_INDICES[0], GL_STATIC_DRAW);
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)0); //send positions on pipe 0
-
     //http://www.opengl-tutorial.org/jp/beginners-tutorials/tutorial-8-basic-shading/
-
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)(sizeof(OBJVEC3))); //send normals on pipe 1
-    // glEnableVertexAttribArray(3);
-    // glVertexAttribPointer(3, 3, GL_UNSIGNED_BYTE, GL_FALSE, sizeof(OBJVERTEX), (void *)(sizeof(OBJVEC3) * 2));
 
     glBindVertexArray(0);
     return true;
@@ -231,4 +244,5 @@ void OBJMESH::Draw()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Index_Buffer);
 
     glDrawElements(GL_TRIANGLES, P_INDICES.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
 }

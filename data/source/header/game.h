@@ -13,8 +13,8 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 1600
+#define WINDOW_HEIGHT 900
 
 //ゲームマネージャー関係
 class GameManager {

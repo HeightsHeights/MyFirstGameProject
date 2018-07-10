@@ -11,7 +11,8 @@ Game:
 	g++ ./data/source/cpp/MainGame.cpp -g -c
 	g++ ./data/source/cpp/Pause.cpp -g -c
 	g++ ./data/source/cpp/GameSystem.cpp -g -c
-	g++ -o Game Game.o Title.o MainGame.o Pause.o GameSystem.o glsl.o Shader.o Controller.o Chara.o Object.o RawModel.o Vector.o -lSDL2 -lSDL2_image -lSDL2_mixer -lGL -lglut -lGLU -Wl,-rpath,/usr/local/lib
+	g++ ./data/source/cpp/UI_Image.cpp -g -c
+	g++ -o Game Game.o Title.o MainGame.o Pause.o GameSystem.o UI_Image.o glsl.o Shader.o Controller.o Chara.o Object.o RawModel.o Vector.o -lSDL2 -lSDL2_image -lSDL2_mixer -lGL -lglut -lGLU -Wl,-rpath,/usr/local/lib
 	rm -f ./*.o
 	
 	#g++ ./data/source/cpp/Audio.cpp  -g -c

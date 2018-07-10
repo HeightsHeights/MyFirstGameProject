@@ -65,6 +65,8 @@ int main(int argc, char *argv[])
     Controller_Maneger::Init_Controller();
     StaticShader shader = *new StaticShader();
 
+    UI_image image = *new UI_image("data/images/number.png");
+
     SDL_Event event;
     player = *new Player("data/data_3d/untitled.obj");
     enemy  = *new Enemy("data/data_3d/test03.obj");
@@ -76,17 +78,9 @@ int main(int argc, char *argv[])
         shader.start();
 
         Render();
-        glRotated(0.05, 0, 1, 0);
-        static const GLfloat diffuse[] = { 0.6f, 0.1f, 0.1f, 1.0f };
 
-        static const GLfloat specular[] = { 0.3f, 0.3f, 0.3f, 1.0f };
-        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, diffuse);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
-        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 100.0f);
-
-        player.Draw();
-        //GameSystem::SystemUpdate();
-
+        GameSystem::SystemUpdate();
+        //image.Draw(1, *new Vector2f(1, 1), *new Vector2f(1, 1));
         shader.stop();
         SDL_GL_SwapWindow(GameManager::window);
         SDL_Delay(4);
@@ -95,7 +89,6 @@ int main(int argc, char *argv[])
     Clear();
     return 0;
 }
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // システム初期化
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,13 +151,11 @@ bool InitGL(int argc, char *argv[])
     /* ウィンドウ全体をビューポートにする */
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    //glMatrixMode(GL_PROJECTION);
+    glMatrixMode(GL_PROJECTION);
     /* 変換行列の初期化 */
     glLoadIdentity();
 
     /* スクリーン上の表示領域をビューポートの大きさに比例させる */
-    //glOrtho(-WINDOW_WIDTH, WINDOW_WIDTH, -WINDOW_HEIGHT, WINDOW_HEIGHT, -1.0, 1.0);
-
     gluPerspective(30.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
     glTranslated(0.0, 0.0, -5.0);
 
@@ -176,16 +167,18 @@ bool InitGL(int argc, char *argv[])
     /* Enables Depth Testing */
     glEnable(GL_DEPTH_TEST);
 
+    glEnable(GL_TEXTURE_2D);
+
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    glEnable(GL_LIGHT1);
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
-    glLightfv(GL_LIGHT1, GL_SPECULAR, green);
+    // glEnable(GL_LIGHT1);
+    // glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
+    // glLightfv(GL_LIGHT1, GL_SPECULAR, green);
 
-    //glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_COLOR_MATERIAL);
 
     /* Really Nice Perspective Calculations */
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);

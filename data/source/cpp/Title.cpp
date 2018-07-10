@@ -1,12 +1,13 @@
-#include "../header/game.h"
-#include "../header/gamesystem.h"
-
 #include "../header/audio.h"
 #include "../header/controller.h"
+#include "../header/game.h"
+#include "../header/gamesystem.h"
 #include "../header/object.h"
 #include "../header/ui_image.h"
 
+//extern std::vector<Controller_Joystic> Controller_Maneger::Joystics;
 extern Player player;
+
 Title::Title()
     : Scene()
 {

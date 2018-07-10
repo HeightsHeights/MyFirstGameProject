@@ -78,11 +78,11 @@ Vector3f Vector3f::normalize()
     return *this / m;
 }
 
-static float dot(Vector3f a, Vector3f b)
+float Vector3f::dot(Vector3f a, Vector3f b)
 {
     return a.x * b.x + a.y * b.y + a.z * b.z;
 }
-static Vector3f cross(Vector3f a, Vector3f b)
+Vector3f Vector3f::cross(Vector3f a, Vector3f b)
 {
     return *new Vector3f(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 }
@@ -155,4 +155,64 @@ Vector2f::Vector2f(float a, float b)
 {
     x = a;
     y = b;
+}
+
+//演算子のオーバーロード
+
+Vector2f Vector2f::operator+(Vector2f obj)
+{
+    return *new Vector2f(this->x + obj.x, this->y + obj.y);
+}
+Vector2f Vector2f::operator-(Vector2f obj)
+{
+    return *new Vector2f(this->x - obj.x, this->y - obj.y);
+}
+Vector2f Vector2f::operator*(float scalar)
+{
+    this->x *= scalar;
+    this->y *= scalar;
+
+    return *this;
+}
+Vector2f Vector2f::operator/(float scalar)
+{
+    return *this * (1 / scalar);
+}
+Vector2f Vector2f::operator=(Vector2f obj)
+{
+    this->x = obj.x;
+    this->y = obj.y;
+    return *this;
+}
+Vector2f Vector2f::operator+()
+{
+    return *this;
+}
+Vector2f Vector2f::operator-()
+{
+    return *this * -1;
+}
+
+float Vector2f::magnitude_second_power()
+{
+    return (float)(std::pow(x, 2.0) + std::pow(y, 2.0));
+}
+float Vector2f::magnitude()
+{
+    return (float)sqrt(magnitude_second_power());
+}
+//単位ベクトル
+Vector2f Vector2f::normalize()
+{
+    float m = magnitude();
+    return *this / m;
+}
+
+float Vector2f::dot(Vector2f a, Vector2f b)
+{
+    return a.x * b.x + a.y * b.y;
+}
+Vector3f Vector2f::cross(Vector2f a, Vector2f b)
+{
+    return *new Vector3f(0, 0, a.x * b.y - a.y * b.x);
 }
