@@ -185,11 +185,11 @@ bool OBJMESH::LoadOBJFile(const char *filename)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Index_Buffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, P_INDICES.size() * sizeof(unsigned int), &P_INDICES[0], GL_STATIC_DRAW);
 
-    //glEnableVertexAttribArray(0);
-    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)0); //send positions on pipe 0
-
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)0); //send positions on pipe 0
+
+    //http://www.opengl-tutorial.org/jp/beginners-tutorials/tutorial-8-basic-shading/
+
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)(sizeof(OBJVEC3))); //send normals on pipe 1
     // glEnableVertexAttribArray(3);
@@ -219,8 +219,6 @@ void OBJMESH::Draw()
 {
 
     //http://marina.sys.wakayama-u.ac.jp/~tokoi/?date=20080830
-    //glEnableClientState(GL_VERTEX_ARRAY);
-    //glEnableClientState(GL_NORMAL_ARRAY);
 
     //http://marina.sys.wakayama-u.ac.jp/~tokoi/?date=20151125
     glBindVertexArray(Vertex_Array_Object);

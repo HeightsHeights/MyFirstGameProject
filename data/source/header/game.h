@@ -17,15 +17,10 @@
 #define WINDOW_HEIGHT 600
 
 //ゲームマネージャー関係
-class GameManager
-{
+class GameManager {
 public:
-  static SDL_Window *window;
-  static SDL_Renderer *renderer;
-  static SDL_GLContext context;
+    static SDL_Window *window;
+    static SDL_Renderer *renderer;
 
 private:
 };
-SDL_Window *GameManager::window;
-SDL_Renderer *GameManager::renderer;
-SDL_GLContext GameManager::context;

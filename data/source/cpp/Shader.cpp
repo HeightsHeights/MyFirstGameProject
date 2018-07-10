@@ -87,11 +87,6 @@ GLuint ShaderManager::loadShader(const char* file, int type)
 {
     GLuint ShaderID = glCreateShader(type);
     //読み込み/////////////////////////////////////////////
-    // GLchar* ShaderSource;
-    // unsigned long len;
-    // loadShaderFile(file, &ShaderSource, &len);
-    // GLint Llen = (GLint)len;
-    // glShaderSource(ShaderID, 1, &ShaderSource, &Llen);
     if (readShaderSource(ShaderID, file))
         exit(1);
     //コンパイル///////////////////////////////////////////
@@ -103,6 +98,10 @@ GLuint ShaderManager::loadShader(const char* file, int type)
     }
 
     return ShaderID;
+}
+
+void ShaderManager::bindAttributes()
+{
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

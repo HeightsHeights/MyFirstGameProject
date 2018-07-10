@@ -7,38 +7,60 @@ typedef enum {
     gamemode_end     = 3,
 } GameMode;
 
+/////////////////////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////////////////////
+
 class Scene {
 private:
     virtual void Render();
+    virtual GameMode System();
 
 public:
     Scene();
-    virtual GameMode System();
+    GameMode Update();
 };
 
 class Title : public Scene {
 private:
     void Render();
+    GameMode System();
 
 public:
     Title();
-    GameMode System();
 };
 
 class MainGame : public Scene {
 private:
     void Render();
+    GameMode System();
 
 public:
     MainGame();
-    GameMode System();
 };
 
 class Pause : public Scene {
 private:
     void Render();
+    GameMode System();
 
 public:
     Pause();
-    GameMode System();
+};
+/////////////////////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////////////////////
+
+class GameSystem {
+private:
+    static Title title;
+    static MainGame maingame;
+    static Pause pause;
+
+    static GameMode mode;
+
+public:
+    GameSystem();
+    static bool InitGameSystem();
+    static int SystemUpdate();
 };
