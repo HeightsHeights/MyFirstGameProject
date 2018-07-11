@@ -1,4 +1,4 @@
-
+#pragma once
 #include "../header/vector.h"
 
 #include <stdio.h>

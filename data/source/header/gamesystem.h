@@ -1,3 +1,9 @@
+#pragma once
+#include "../header/audio.h"
+#include "../header/controller.h"
+#include "../header/game.h"
+#include "../header/object.h"
+#include "../header/ui_image.h"
 #include <SDL2/SDL.h>
 
 typedef enum {
@@ -23,6 +29,10 @@ public:
 
 class Title : public Scene {
 private:
+    Vector3f point;
+    Vector3f front;
+    Player player;
+    Enemy enemy[100];
     void Render();
     GameMode System();
 

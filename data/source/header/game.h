@@ -1,3 +1,4 @@
+#pragma once
 //c++関係
 #include <stdio.h>
 #include <vector>
@@ -13,8 +14,8 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 
-#define WINDOW_WIDTH 1600
-#define WINDOW_HEIGHT 900
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 
 //ゲームマネージャー関係
 class GameManager {

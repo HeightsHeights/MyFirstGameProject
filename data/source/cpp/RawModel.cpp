@@ -130,8 +130,7 @@ bool OBJMESH::LoadOBJFile(const char *filename)
             //法線ベクトル
             float x, y, z;
             file >> x >> y >> z;
-            normals.push_back(OBJVEC3(OBJVEC3(x, y, z).normalize()));
-            NORMALS.push_back(OBJVEC3(OBJVEC3(x, y, z).normalize()));
+            normals.push_back(OBJVEC3(x, y, z));
         }
 
         //インデックス情報
@@ -175,6 +174,9 @@ bool OBJMESH::LoadOBJFile(const char *filename)
         vertex.color    = *new OBJVEC3(255, 255, 0);
         //vertex.texcoord = texcoords[i];
         VERTICES.push_back(vertex);
+    }
+    for (int i = 0; i < N_INDICES.size(); i++) {
+        NORMALS.push_back(normals[N_INDICES[i]]);
     }
     //https://stackoverflow.com/questions/19986570/interleaved-vbo-with-coords-normals-and-color
     //make vao

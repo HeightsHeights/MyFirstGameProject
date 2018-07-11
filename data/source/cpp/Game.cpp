@@ -42,8 +42,10 @@ GLfloat manupilator_color[][4] = {
 float light0_position[4] = { 0.0, 1000.0, 0.0, 1.0 };
 GLfloat light1pos[]      = { 5.0, 3.0, 0.0, 1.0 };
 
-GLfloat green[] = { 0.0, 1.0, 0.0, 1.0 };
-GLfloat red[]   = { 0.8, 0.2, 0.2, 1.0 };
+GLfloat white[]                 = { 1.0, 1.0, 1.0, 1.0 };
+GLfloat green[]                 = { 0.0, 1.0, 0.0, 1.0 };
+GLfloat red[]                   = { 0.8, 0.2, 0.2, 1.0 };
+static const GLfloat lightamb[] = { 0.1f, 0.1f, 0.1f, 1.0f };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // メイン
@@ -174,6 +176,10 @@ bool InitGL(int argc, char *argv[])
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, white);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, white);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, lightamb);
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
     // glEnable(GL_LIGHT1);
     // glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
     // glLightfv(GL_LIGHT1, GL_SPECULAR, green);

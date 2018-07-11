@@ -127,6 +127,18 @@ Vector3f Vector3f::Rotate(Vector3f v, float angle)
     return ret;
 }
 
+//角度計算
+float Vector3f::BetweenAngleRdian(Vector3f v)
+{
+    Vector3f THIS = *new Vector3f(x, y, z);
+    return acosf(dot(THIS, v) / (THIS.magnitude() * v.magnitude()));
+}
+
+float Vector3f::BetweenAngleDegree(Vector3f v)
+{
+    return BetweenAngleRdian(v) * 180.0f / M_PI;
+}
+
 //使い方
 /*
 int main()

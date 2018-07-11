@@ -31,6 +31,8 @@ public:
     Vector3f Matrix_multiplication(float matrix[3][3]);
     Vector3f Scaling(Vector3f scale_vector);
     Vector3f Rotate(Vector3f v, float angle);
+    float BetweenAngleRdian(Vector3f v);
+    float BetweenAngleDegree(Vector3f v);
 };
 /////////////////////////////////////////////////////////////////////////////
 //
