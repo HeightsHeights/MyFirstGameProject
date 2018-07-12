@@ -79,15 +79,24 @@ public:
     OBJSUBSET() {}
 };
 ////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+//  オブジェクト郡？
+////////////////////////////////////////////////////////////////
+class INFOMATION {
+private:
+public:
+    std::vector<OBJVEC3> POSITIONS;
+    std::vector<OBJVEC3> NORMALS;
+    std::vector<OBJVEC3> COLORS;
+};
+////////////////////////////////////////////////////////////////
+
 ////////////////////////////////////////////////////////////////
 //　メッシュ情報
 ////////////////////////////////////////////////////////////////
 class OBJMESH {
 private:
-    OBJVERTEX *m_Vertex;
-    OBJSUBSET *m_Subset;
-    unsigned int *m_Indices;
-
     GLuint Vertex_Array_Object;
     GLuint Vertex_Buffer_Object;
     GLuint Index_Buffer;
@@ -97,6 +106,7 @@ private:
     bool LoadOBJFile(const char *filename);
 
 public:
+    INFOMATION info;
     std::vector<OBJVERTEX> VERTICES;
     std::vector<OBJVEC3> NORMALS;
     std::vector<unsigned int> P_INDICES;

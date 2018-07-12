@@ -16,7 +16,7 @@ GameMode Title::System()
     point.z = Controller_Maneger::Joystics[0].state.Ry_axis;
     return gamemode_title;
 }
-
+float a = 0;
 void Title::Render()
 {
 
@@ -32,7 +32,7 @@ void Title::Render()
     Vector3f y     = Vector3f::cross(z, delta).normalize();
 
     printf("%f\n", front.BetweenAngleDegree(location - point));
-    glRotated(front.BetweenAngleDegree(location - point), y.x, y.y, y.z);
+    glRotated(a += 0.01, 0, 1, 0);
     //player.forward.Rotate(*new Vector3f(0, 1, 0), 0.05);
     // static const GLfloat diffuse[]  = { 0.6f, 0.1f, 0.1f, 1.0f };
     // static const GLfloat specular[] = { 0.3f, 0.3f, 0.3f, 1.0f };

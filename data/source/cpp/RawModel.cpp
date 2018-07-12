@@ -118,9 +118,11 @@ bool OBJMESH::LoadOBJFile(const char *filename)
             //頂点座標
             float x, y, z;
             file >> x >> y >> z;
-            //printf("x:%fy:%fz:%f\n", x, y, z);
             OBJVEC3 v(x, y, z);
             positions.push_back(v);
+
+            ///////////////////////////
+            info.POSITIONS.push_back(v);
         } else if (0 == strcmp(buf, "vt")) {
             //テクスチャ座標
             float u, v;
@@ -131,6 +133,8 @@ bool OBJMESH::LoadOBJFile(const char *filename)
             float x, y, z;
             file >> x >> y >> z;
             normals.push_back(OBJVEC3(x, y, z));
+            ///////////////////////////
+
         }
 
         //インデックス情報
@@ -177,13 +181,14 @@ bool OBJMESH::LoadOBJFile(const char *filename)
     }
     for (int i = 0; i < N_INDICES.size(); i++) {
         NORMALS.push_back(normals[N_INDICES[i]]);
+        info.NORMALS.push_back(normals[N_INDICES[i]]);
     }
     //https://stackoverflow.com/questions/19986570/interleaved-vbo-with-coords-normals-and-color
     //make vao
     glGenVertexArrays(1, &Vertex_Array_Object);
     glBindVertexArray(Vertex_Array_Object);
 
-    //make vbo
+    // //make vbo
     glGenBuffers(1, &Vertex_Buffer_Object);
     glBindBuffer(GL_ARRAY_BUFFER, Vertex_Buffer_Object);
     glBufferData(GL_ARRAY_BUFFER, VERTICES.size() * sizeof(OBJVERTEX), &VERTICES[0], GL_STATIC_DRAW);
@@ -202,6 +207,15 @@ bool OBJMESH::LoadOBJFile(const char *filename)
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void *)0); //send normals on pipe 1
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    // glGenBuffers(1, &Vertex_Buffer_Object);
+    // glBindBuffer(GL_ARRAY_BUFFER, Vertex_Buffer_Object);
+    // glBufferData(GL_ARRAY_BUFFER, sizeof(info), &info, GL_STATIC_DRAW);
+    // glEnableVertexAttribArray(0);
+    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0); //send positions on pipe 0
+    // glEnableVertexAttribArray(2);
+    // glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void *)(info.POSITIONS.size() * sizeof(OBJVEC3))); //send positions on pipe 0
+    // glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     //make ib
     glGenBuffers(1, &Index_Buffer);
@@ -237,8 +251,13 @@ void OBJMESH::Draw()
 
     //http://marina.sys.wakayama-u.ac.jp/~tokoi/?date=20151125
     glBindVertexArray(Vertex_Array_Object);
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(3);
 
     glBindBuffer(GL_ARRAY_BUFFER, Vertex_Buffer_Object);
+    glBindBuffer(GL_ARRAY_BUFFER, Normal_Buffer_Object);
 
     //glVertexPointer(3, GL_FLOAT, 0, BUFFER_OFFSET(0));
     //glNormalPointer(GL_FLOAT, sizeof(OBJVERTEX), (void *)(3 * sizeof(float)));

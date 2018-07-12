@@ -157,12 +157,6 @@ bool InitGL(int argc, char *argv[])
     /* 変換行列の初期化 */
     glLoadIdentity();
 
-    /* スクリーン上の表示領域をビューポートの大きさに比例させる */
-    gluPerspective(30.0, (double)WINDOW_WIDTH / (double)WINDOW_HEIGHT, 1.0, 100.0);
-    glTranslated(0.0, 0.0, -5.0);
-
-    gluLookAt(3.0, 4.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-
     /* Set the background black */
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
