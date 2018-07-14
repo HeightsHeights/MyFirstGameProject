@@ -43,6 +43,7 @@ private:
     static unsigned int num_of_joystic;
 
 public:
+    static SDL_Event event;
     static std::vector<Controller_Joystic> Joystics;
 
     Controller_Maneger();

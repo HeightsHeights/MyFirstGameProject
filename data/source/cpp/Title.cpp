@@ -27,7 +27,7 @@ void Title::Render()
     gluLookAt(3.0, 4.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
     glPushMatrix();
-    glRotated(player.Rotation.y += 0.01, 0, 1, 0);
+    glRotated(player.rotation.y += 0.01, 0, 1, 0);
     player.Draw();
     glPopMatrix();
 }

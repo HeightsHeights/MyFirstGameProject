@@ -51,12 +51,16 @@ private:
     Enemy enemy[MAX_ENEMY];
     Bullet player_bullet[MAX_PLAYER_BULLET];
     Bullet enemy_bullet[MAX_ENEMY_BULLET];
+
+    static unsigned int time;
+
     void Render();
     GameMode System();
     void InitScene();
 
 public:
     MainGame();
+    static Uint32 Timer(Uint32 interval, void *pram);
 };
 
 class Pause : public Scene {
@@ -85,5 +89,3 @@ public:
     static bool InitGameSystem();
     static int SystemUpdate();
 };
-
-//

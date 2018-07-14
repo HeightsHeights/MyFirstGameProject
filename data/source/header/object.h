@@ -20,9 +20,9 @@ private:
 public:
     Object_Type type;
     OBJMESH Model;
-    Vector3f Position;
-    Vector3f Rotation;
-    Vector3f Scale;
+    Vector3f position;
+    Vector3f rotation;
+    Vector3f scale;
 
     Object();
     Object(const char *filename);
@@ -38,6 +38,7 @@ class Chara : public Object {
 private:
 public:
     unsigned int HP;
+    Vector3f aimpoint;
     Vector3f forward;
     Vector3f speed;
     Vector3f accel;

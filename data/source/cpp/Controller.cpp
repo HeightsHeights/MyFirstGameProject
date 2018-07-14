@@ -2,6 +2,7 @@
 #include "../header/controller.h"
 #define MAX_JOYSTIC_AXIS 32767
 
+SDL_Event Controller_Maneger::event;
 SDL_atomic_t Controller_Maneger::atm;
 unsigned int Controller_Maneger::num_of_joystic;
 std::vector<Controller_Joystic> Controller_Maneger::Joystics;
@@ -31,12 +32,14 @@ bool Controller_Maneger::Init_Controller()
         printf("error create thread");
         return false;
     }
+    return true;
 }
 
 int Controller_Maneger::Update_Controller(void *data)
 {
-    //SDL_PollEvent(&event);
-    while (SDL_AtomicGet((SDL_atomic_t *)data) > 0) {
+
+    while (SDL_AtomicGet((SDL_atomic_t *)data) > 0 && event.type != SDL_QUIT) {
+        SDL_PollEvent(&event);
         SDL_JoystickUpdate();
         for (int i = 0; i < num_of_joystic; i++) {
             Joystics[i].Read_State_Controller();

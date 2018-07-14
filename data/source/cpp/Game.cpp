@@ -54,9 +54,6 @@ static const GLfloat lightamb[] = { 0.1f, 0.1f, 0.1f, 1.0f };
 SDL_Window *GameManager::window;
 SDL_Renderer *GameManager::renderer;
 
-Player player;
-Enemy enemy;
-
 int main(int argc, char *argv[])
 {
     if (!InitSystem(argc, argv)) {
@@ -64,15 +61,10 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    Controller_Maneger::Init_Controller();
     StaticShader shader = *new StaticShader();
 
-    SDL_Event event;
+    while (Controller_Maneger::event.type != SDL_QUIT) {
 
-    while (event.type != SDL_QUIT) {
-        SDL_PollEvent(&event);
-
-        //glDepthFunc(GL_LESS);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader.start();
 
@@ -108,6 +100,11 @@ bool InitSystem(int argc, char *argv[])
         return false;
     }
 
+    if (!Controller_Maneger::Init_Controller()) {
+        printf("error laod controller\n");
+        return false;
+    }
+
     return true;
 }
 
@@ -117,7 +114,7 @@ bool InitSystem(int argc, char *argv[])
 bool InitWindow()
 {
     //sdlの初期化
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK)) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK)) {
         printf("error sdlinit\n");
         return false;
     }
@@ -194,10 +191,6 @@ bool InitGL(int argc, char *argv[])
     // glLightfv(GL_LIGHT0, GL_SPECULAR, white);
     // glLightfv(GL_LIGHT0, GL_AMBIENT, lightamb);
     // glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-    // glEnable(GL_LIGHT1);
-    // glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
-    // glLightfv(GL_LIGHT1, GL_SPECULAR, green);
-
     glEnable(GL_COLOR_MATERIAL);
 
     /* Really Nice Perspective Calculations */
@@ -221,7 +214,6 @@ void Render()
     glEnd();
 
     glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
-    //glLightfv(GL_LIGHT1, GL_POSITION, light1pos);
 
     glFlush();
 }
