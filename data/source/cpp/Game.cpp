@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 
     StaticShader shader = *new StaticShader();
 
-    while (Controller_Maneger::event.type != SDL_QUIT) {
+    while (SDL_AtomicGet(&Controller_Maneger::atm) > 0 && Controller_Maneger::event.type != SDL_QUIT) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader.start();

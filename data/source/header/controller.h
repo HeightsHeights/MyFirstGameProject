@@ -2,6 +2,12 @@
 #include <SDL2/SDL.h>
 #include <vector>
 
+typedef enum {
+    B_SHOOT_DICITION = 0,
+    B_SHIFT_BACK     = 1,
+    B_PAUSE          = 2,
+    B_NUMBER         = 3,
+} ButtonMode;
 /////////////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -12,11 +18,7 @@ public:
     float Ry_axis;
     float Lx_axis;
     float Ly_axis;
-    bool button_shoot_decition;
-    bool button_shift_back;
-    bool button_bomb;
-    bool button_forward;
-    bool button_pause;
+    bool button[B_NUMBER];
 
     Controller_State();
 };
@@ -39,10 +41,10 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 class Controller_Maneger {
 private:
-    static SDL_atomic_t atm;
-    static unsigned int num_of_joystic;
 
 public:
+    static SDL_atomic_t atm;
+    static unsigned int num_of_joystic;
     static SDL_Event event;
     static std::vector<Controller_Joystic> Joystics;
 

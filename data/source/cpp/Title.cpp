@@ -13,9 +13,9 @@ void Title::InitScene()
 
 GameMode Title::System()
 {
-    if (Controller_Maneger::Joystics[0].state.button_shoot_decition)
+    if (Controller_Maneger::Joystics[0].state.button[B_SHOOT_DICITION])
         return gamemode_main;
-    else if (Controller_Maneger::Joystics[0].state.button_pause)
+    else if (Controller_Maneger::Joystics[0].state.button[B_PAUSE])
         return gamemode_end;
     else
         return gamemode_title;

@@ -45,7 +45,7 @@ int Controller_Maneger::Update_Controller(void *data)
             Joystics[i].Read_State_Controller();
         }
 
-        if (Joystics[0].state.button_pause) {
+        if (Joystics[0].state.button[B_PAUSE]) {
             SDL_AtomicDecRef((SDL_atomic_t *)data);
         }
         SDL_Delay(4);
@@ -116,21 +116,21 @@ void Controller_Joystic::Read_State_Controller()
     printf("Lx:%4f Ly:%4f Rx:%4f Ry:%4f\n", state.Lx_axis, state.Ly_axis, state.Rx_axis, state.Ry_axis);
 
     if (SDL_JoystickGetButton(joystick, 5) > 0) {
-        state.button_shoot_decition = true;
+        state.button[B_SHOOT_DICITION] = true;
     } else {
-        state.button_shoot_decition = false;
+        state.button[B_SHOOT_DICITION] = false;
     }
 
     if (SDL_JoystickGetButton(joystick, 4) > 0) {
-        state.button_shift_back = true;
+        state.button[B_SHIFT_BACK] = true;
     } else {
-        state.button_shift_back = false;
+        state.button[B_SHIFT_BACK] = false;
     }
 
     if (SDL_JoystickGetButton(joystick, 11) > 0) {
-        state.button_pause = true;
+        state.button[B_PAUSE] = true;
     } else {
-        state.button_pause = false;
+        state.button[B_PAUSE] = false;
     }
 }
 /////////////////////////////////////////////////////////////////////////////
@@ -138,13 +138,12 @@ void Controller_Joystic::Read_State_Controller()
 /////////////////////////////////////////////////////////////////////////////
 Controller_State::Controller_State()
 {
-    Rx_axis               = 0;
-    Ry_axis               = 0;
-    Lx_axis               = 0;
-    Ly_axis               = 0;
-    button_shoot_decition = false;
-    button_shift_back     = false;
-    button_bomb           = false;
-    button_forward        = false;
-    button_pause          = false;
+    Rx_axis = 0;
+    Ry_axis = 0;
+    Lx_axis = 0;
+    Ly_axis = 0;
+
+    for (int i = 0; i < B_NUMBER; i++) {
+        button[i] = false;
+    }
 }

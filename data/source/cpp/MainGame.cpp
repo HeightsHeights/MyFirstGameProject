@@ -49,8 +49,8 @@ GameMode MainGame::System()
     /////////////////////////
     // 自機
     /////////////////////////
-    player.aimpoint.x = player.position.x -= (Controller_Maneger::Joystics[0].state.button_shift_back) ? Controller_Maneger::Joystics[0].state.Lx_axis * 0.03 : Controller_Maneger::Joystics[0].state.Lx_axis * 0.1;
-    player.aimpoint.y = player.position.y -= (Controller_Maneger::Joystics[0].state.button_shift_back) ? Controller_Maneger::Joystics[0].state.Ly_axis * 0.03 : Controller_Maneger::Joystics[0].state.Ly_axis * 0.1;
+    player.aimpoint.x = player.position.x -= (Controller_Maneger::Joystics[0].state.button[B_SHIFT_BACK]) ? Controller_Maneger::Joystics[0].state.Lx_axis * 0.03 : Controller_Maneger::Joystics[0].state.Lx_axis * 0.1;
+    player.aimpoint.y = player.position.y -= (Controller_Maneger::Joystics[0].state.button[B_SHIFT_BACK]) ? Controller_Maneger::Joystics[0].state.Ly_axis * 0.03 : Controller_Maneger::Joystics[0].state.Ly_axis * 0.1;
     player.aimpoint.x -= Controller_Maneger::Joystics[0].state.Rx_axis * 30;
     player.aimpoint.y -= Controller_Maneger::Joystics[0].state.Ry_axis * 30;
 
@@ -69,7 +69,7 @@ GameMode MainGame::System()
     /////////////////////////
     // ラスト
     /////////////////////////
-    if (Controller_Maneger::Joystics[0].state.button_pause)
+    if (Controller_Maneger::Joystics[0].state.button[B_PAUSE])
         return gamemode_end;
     else
         return gamemode_main;
