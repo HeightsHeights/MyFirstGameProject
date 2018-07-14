@@ -29,7 +29,7 @@ int GameSystem::SystemUpdate()
     case gamemode_title:
         mode = title.Update();
         break;
-    case gamemode_playing:
+    case gamemode_main:
         mode = maingame.Update();
         break;
     case gamemode_pause:
@@ -42,6 +42,11 @@ int GameSystem::SystemUpdate()
 //////////////////////////////////////////////////////////////////////////////////////////////
 Scene::Scene()
 {
+    have_inited = false;
+}
+
+void Scene::InitScene()
+{
 }
 
 void Scene::Render()
@@ -53,6 +58,11 @@ GameMode Scene::System()
 
 GameMode Scene::Update()
 {
+    if (!have_inited) {
+        InitScene();
+        have_inited = true;
+    }
+
     GameMode ret_mode = System();
     Render();
     return ret_mode;

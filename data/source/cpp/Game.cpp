@@ -67,22 +67,19 @@ int main(int argc, char *argv[])
     Controller_Maneger::Init_Controller();
     StaticShader shader = *new StaticShader();
 
-    UI_image image = *new UI_image("data/images/number.png");
-
     SDL_Event event;
-    player = *new Player("data/data_3d/untitled.obj");
-    enemy  = *new Enemy("data/data_3d/test03.obj");
+
     while (event.type != SDL_QUIT) {
         SDL_PollEvent(&event);
 
-        glDepthFunc(GL_LESS);
+        //glDepthFunc(GL_LESS);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader.start();
 
         Render();
 
         GameSystem::SystemUpdate();
-        //image.Draw(1, *new Vector2f(1, 1), *new Vector2f(1, 1));
+
         shader.stop();
         SDL_GL_SwapWindow(GameManager::window);
         SDL_Delay(4);
@@ -168,12 +165,35 @@ bool InitGL(int argc, char *argv[])
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
 
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, white);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, white);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, lightamb);
-    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+    /**
+ * 光源の環境光
+ */
+    float lightAmbient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+
+    /**
+ * 光源の拡散光
+ */
+    float lightDiffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
+
+    /**
+ * 光源の位置
+ */
+    float lightPos[] = { 0, 0, 2, 1 };
+    //　Light0の環境光の設定
+    glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
+
+    //　Light0の拡散光の設定
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
+
+    //　Light0の場所の設定
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+
+    // glEnable(GL_LIGHTING);
+    // glEnable(GL_LIGHT0);
+    // glLightfv(GL_LIGHT0, GL_DIFFUSE, white);
+    // glLightfv(GL_LIGHT0, GL_SPECULAR, white);
+    // glLightfv(GL_LIGHT0, GL_AMBIENT, lightamb);
+    // glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
     // glEnable(GL_LIGHT1);
     // glLightfv(GL_LIGHT1, GL_DIFFUSE, green);
     // glLightfv(GL_LIGHT1, GL_SPECULAR, green);

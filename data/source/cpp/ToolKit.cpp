@@ -3,8 +3,8 @@
 void LookatVector(Vector3f direction)
 {
     direction       = direction.normalize();
-    Vector3f up     = *new Vector3f(0, -1, 0);
-    Vector3f cross1 = Vector3f::cross(up, direction).normalize();
+    Vector3f up     = *new Vector3f(0, 1, 0);
+    Vector3f cross1 = Vector3f::cross(direction, up).normalize();
     Vector3f cross2 = Vector3f::cross(cross1, direction).normalize();
 
     float rotation[4][4] = { { cross1.x, cross1.y, cross1.z, 0 },

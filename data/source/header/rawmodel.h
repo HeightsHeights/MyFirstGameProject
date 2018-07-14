@@ -41,7 +41,7 @@ public:
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
-//　頂点情報
+//　色情報　現状使用なし
 ////////////////////////////////////////////////////////////////
 class OBJCOLOR {
 public:
@@ -69,7 +69,7 @@ public:
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
-//　サブセット情報
+//　サブセット情報 現状使用なし
 ////////////////////////////////////////////////////////////////
 class OBJSUBSET {
 public:
@@ -102,18 +102,14 @@ private:
     GLuint Index_Buffer;
     GLuint Normal_Buffer_Object;
 
+    unsigned int number_of_position;
+
     bool LoadMTLFile(const char *filename);
     bool LoadOBJFile(const char *filename);
 
 public:
-    INFOMATION info;
-    std::vector<OBJVERTEX> VERTICES;
-    std::vector<OBJVEC3> NORMALS;
-    std::vector<unsigned int> P_INDICES;
-    std::vector<unsigned int> N_INDICES;
-    std::vector<unsigned int> T_INDICES;
-
     bool LoadFile(const char *filename);
+    void Copy(OBJMESH model);
     void Release();
     void Draw();
 };

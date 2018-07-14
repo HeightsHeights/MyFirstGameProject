@@ -1,4 +1,5 @@
 #pragma once
+#include "../header/collider.h"
 #include "../header/rawmodel.h"
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -26,6 +27,8 @@ public:
     Object();
     Object(const char *filename);
     Object(const char *filename, Vector3f p, Vector3f r, Vector3f s);
+    Object(OBJMESH model);
+    Object(OBJMESH model, Vector3f p, Vector3f r, Vector3f s);
     void Draw();
 };
 /////////////////////////////////////////////////////////////////////////////
@@ -39,9 +42,11 @@ public:
     Vector3f speed;
     Vector3f accel;
     //当たり判定
+    Collider collider;
 
     Chara();
     Chara(const char *filename);
+    Chara(OBJMESH model);
     //virtual void move() = 0;
 };
 /////////////////////////////////////////////////////////////////////////////
@@ -52,6 +57,7 @@ private:
 public:
     Player();
     Player(const char *filename);
+    Player(OBJMESH model);
     //void move();
 };
 /////////////////////////////////////////////////////////////////////////////
@@ -62,6 +68,7 @@ private:
 public:
     Enemy();
     Enemy(const char *filename);
+    Enemy(OBJMESH model);
     //void move();
 };
 /////////////////////////////////////////////////////////////////////////////
@@ -72,5 +79,6 @@ private:
 public:
     Bullet();
     Bullet(const char *filename);
+    Bullet(OBJMESH model);
     //void move();
 };

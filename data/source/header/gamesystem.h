@@ -6,11 +6,15 @@
 #include "../header/ui_image.h"
 #include <SDL2/SDL.h>
 
+#define MAX_ENEMY 30
+#define MAX_PLAYER_BULLET 100
+#define MAX_ENEMY_BULLET 200
+
 typedef enum {
-    gamemode_title   = 0,
-    gamemode_playing = 1,
-    gamemode_pause   = 2,
-    gamemode_end     = 3,
+    gamemode_title = 0,
+    gamemode_main  = 1,
+    gamemode_pause = 2,
+    gamemode_end   = 3,
 } GameMode;
 
 /////////////////////////////////////////////////////////////////////
@@ -19,8 +23,10 @@ typedef enum {
 
 class Scene {
 private:
+    virtual void InitScene();
     virtual void Render();
     virtual GameMode System();
+    bool have_inited;
 
 public:
     Scene();
@@ -29,10 +35,9 @@ public:
 
 class Title : public Scene {
 private:
-    Vector3f point;
-    Vector3f front;
     Player player;
-    Enemy enemy[100];
+
+    void InitScene();
     void Render();
     GameMode System();
 
@@ -42,8 +47,13 @@ public:
 
 class MainGame : public Scene {
 private:
+    Player player;
+    Enemy enemy[MAX_ENEMY];
+    Bullet player_bullet[MAX_PLAYER_BULLET];
+    Bullet enemy_bullet[MAX_ENEMY_BULLET];
     void Render();
     GameMode System();
+    void InitScene();
 
 public:
     MainGame();
@@ -53,6 +63,7 @@ class Pause : public Scene {
 private:
     void Render();
     GameMode System();
+    void InitScene();
 
 public:
     Pause();
@@ -74,3 +85,5 @@ public:
     static bool InitGameSystem();
     static int SystemUpdate();
 };
+
+//

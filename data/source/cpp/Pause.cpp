@@ -5,6 +5,10 @@ Pause::Pause()
 {
 }
 
+void Pause::InitScene()
+{
+}
+
 GameMode Pause::System()
 {
 }

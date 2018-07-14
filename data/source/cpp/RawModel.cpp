@@ -50,6 +50,7 @@ OBJCOLOR::OBJCOLOR(GLubyte cr, GLubyte cg, GLubyte cb)
 
 bool OBJMESH::LoadMTLFile(const char *filename)
 {
+
     std::ifstream file;
     char buf[OBJ_BUFFER_LENGTH] = { 0 };
 
@@ -86,13 +87,17 @@ bool OBJMESH::LoadOBJFile(const char *filename)
 {
     std::ifstream file;
 
+    INFOMATION info;
+    std::vector<OBJVERTEX> VERTICES;
+    std::vector<OBJVEC3> NORMALS;
+    std::vector<unsigned int> P_INDICES;
+    std::vector<unsigned int> N_INDICES;
+    std::vector<unsigned int> T_INDICES;
+
     char buf[OBJ_BUFFER_LENGTH] = { 0 };
     std::vector<OBJVEC3> positions;
     std::vector<OBJVEC3> normals;
     std::vector<OBJVEC2> texcoords;
-
-    std::vector<OBJVERTEX> t_vertices;
-    std::vector<OBJSUBSET> t_subsets;
 
     //ファイルを開ける
     file.open(filename, std::fstream::in);
@@ -197,6 +202,7 @@ bool OBJMESH::LoadOBJFile(const char *filename)
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)0); //send positions on pipe 0
     // glEnableVertexAttribArray(2);
     // glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)(sizeof(OBJVEC3))); //send normals on pipe 1
+
     glEnableVertexAttribArray(3);
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(OBJVERTEX), (void *)(sizeof(OBJVEC3) * 2));
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -225,6 +231,9 @@ bool OBJMESH::LoadOBJFile(const char *filename)
     //http://www.opengl-tutorial.org/jp/beginners-tutorials/tutorial-8-basic-shading/
 
     glBindVertexArray(0);
+
+    number_of_position = P_INDICES.size();
+
     return true;
 }
 
@@ -264,6 +273,16 @@ void OBJMESH::Draw()
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Index_Buffer);
 
-    glDrawElements(GL_TRIANGLES, P_INDICES.size(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, number_of_position, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void OBJMESH::Copy(OBJMESH model)
+{
+    Vertex_Array_Object  = model.Vertex_Array_Object;
+    Vertex_Buffer_Object = model.Vertex_Buffer_Object;
+    Normal_Buffer_Object = model.Normal_Buffer_Object;
+
+    Index_Buffer       = model.Normal_Buffer_Object;
+    number_of_position = model.number_of_position;
 }

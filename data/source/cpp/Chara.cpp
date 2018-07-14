@@ -11,6 +11,10 @@ Chara::Chara(const char *filename)
     : Object(filename)
 {
 }
+Chara::Chara(OBJMESH model)
+    : Object(model)
+{
+}
 ///////////////////////////////////////////////////////////////////////////////
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -20,6 +24,10 @@ Player::Player()
 }
 Player::Player(const char *filename)
     : Chara(filename)
+{
+}
+Player::Player(OBJMESH model)
+    : Chara(model)
 {
 }
 ///////////////////////////////////////////////////////////////////////////////
@@ -33,7 +41,10 @@ Enemy::Enemy(const char *filename)
     : Chara(filename)
 {
 }
-
+Enemy::Enemy(OBJMESH model)
+    : Chara(model)
+{
+}
 ///////////////////////////////////////////////////////////////////////////////
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -43,5 +54,9 @@ Bullet::Bullet()
 }
 Bullet::Bullet(const char *filename)
     : Chara(filename)
+{
+}
+Bullet::Bullet(OBJMESH model)
+    : Chara(model)
 {
 }
