@@ -165,6 +165,8 @@ public:
 
     Vector3f point;
 
+    float subargument;
+
     Enemy();
     Enemy(const char *filename);
     Enemy(OBJMESH model);

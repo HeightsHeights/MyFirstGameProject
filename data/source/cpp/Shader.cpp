@@ -115,4 +115,5 @@ StaticShader::StaticShader()
 void StaticShader::bindAttributes()
 {
     bindAttribute(0, "position");
+    bindAttribute(2, "normal");
 }

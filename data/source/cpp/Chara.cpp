@@ -56,8 +56,32 @@ Enemy::Enemy(OBJMESH model)
 }
 void Enemy::Move()
 {
+
+    switch (enemy_move_type) {
+    case EMT_Forward:
+        position = position + Vector3f(0, 0, -1);
+        break;
+    case EMT_Sin:
+        switch (enemy_move_direction) {
+        case EMD_toFront:
+            break;
+        case EMD_toBack:
+            break;
+        case EMD_toRight:
+            break;
+        case EMD_toLeft:
+            break;
+        }
+        break;
+    case EMT_Spiral:
+        break;
+    case EMT_StayPoint:
+        break;
+    }
+
     //speed    = speed + accel;
     //position = position + speed;
+
     static float angle = 0;
     angle += 1.0f;
     position = position + *new Vector3f(0, std::cos(angle * M_PI / 180) / 10, -0.05f);
@@ -75,6 +99,10 @@ void Enemy::Set(EnemyInfo info)
         //当たり判定
         break;
     case ET_Ufo:
+        break;
+    case ET_Plane:
+        break;
+    default:
         break;
     };
 
