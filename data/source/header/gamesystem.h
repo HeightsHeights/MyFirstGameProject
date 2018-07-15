@@ -72,6 +72,8 @@ private:
     void EnemyAttack();
     void BulletMove();
 
+    void SetEnemyInfo();
+
 public:
     MainGame();
     static Uint32 Timer(Uint32 interval, void *pram);

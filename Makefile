@@ -14,5 +14,6 @@ Game:
 	g++ ./data/source/cpp/UI_Image.cpp -g -c
 	g++ ./data/source/cpp/ToolKit.cpp -g -c
 	g++ ./data/source/cpp/Collider.cpp -g -c
-	g++ -o Game Game.o Title.o MainGame.o Pause.o ToolKit.o GameSystem.o UI_Image.o glsl.o Shader.o Controller.o Chara.o Object.o Collider.o RawModel.o Vector.o -lSDL2 -lSDL2_image -lSDL2_mixer -lGL -lglut -lGLU -Wl,-rpath,/usr/local/lib
+	g++ ./data/source/cpp/SetEnemyInfo.cpp -g -c
+	g++ -o Game Game.o Title.o MainGame.o SetEnemyInfo.o Pause.o ToolKit.o GameSystem.o UI_Image.o glsl.o Shader.o Controller.o Chara.o Object.o Collider.o RawModel.o Vector.o -lSDL2 -lSDL2_image -lSDL2_mixer -lGL -lglut -lGLU -Wl,-rpath,/usr/local/lib
 	rm -f ./*.o

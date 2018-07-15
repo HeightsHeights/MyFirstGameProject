@@ -110,40 +110,6 @@ public:
     Player(OBJMESH model);
     void Move();
 };
-/////////////////////////////////////////////////////////////////////////////
-//
-/////////////////////////////////////////////////////////////////////////////
-class Enemy : public Chara {
-private:
-public:
-    EnemyMoveType enemy_move_type;
-    EnemyShotType enemy_shot_type;
-
-    Vector3f point;
-    float angle;
-
-    unsigned int spawn_time;
-    unsigned int despawn_time;
-
-    Enemy();
-    Enemy(const char *filename);
-    Enemy(OBJMESH model);
-    void Move();
-    void Set(Vector3f p, Vector3f v, Vector3f a);
-    void SetEnemyInfo();
-};
-/////////////////////////////////////////////////////////////////////////////
-//
-/////////////////////////////////////////////////////////////////////////////
-class Bullet : public Chara {
-private:
-public:
-    Bullet();
-    Bullet(const char *filename);
-    Bullet(OBJMESH model);
-    void Move();
-    void Set(Vector3f p, Vector3f v, Vector3f a);
-};
 
 /////////////////////////////////////////////////////////////////////////////
 //敵 スポーン時間　デスポーン時間　敵の形　敵の移動方法　敵の移動方向　敵の向き設定　敵の攻撃方法　敵の攻撃開始の設定　敵のHP　敵の攻撃開始時間　敵の攻撃スパン　敵のおおまかな攻撃回数　敵の初期位置　敵の初期向き　敵のスピード 敵の加速度　敵の目的位置
@@ -174,3 +140,46 @@ typedef struct {
 
     Vector3f point;
 } EnemyInfo;
+/////////////////////////////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////////////////////////////
+class Enemy : public Chara {
+private:
+public:
+    unsigned int spawn_time;
+    unsigned int despawn_time;
+
+    EnemyType enemy_type;
+    EnemyMoveType enemy_move_type;
+    EnemyMoveDirection enemy_move_direction;
+    EnemyDirectionType enemy_direction_type;
+
+    EnemyShotType enemy_shot_type;
+    EnemyShotStartType enemy_shot_start_type;
+
+    unsigned int hp;
+
+    unsigned int attack_delay;
+    unsigned int attack_span;
+    unsigned int attack_times;
+
+    Vector3f point;
+
+    Enemy();
+    Enemy(const char *filename);
+    Enemy(OBJMESH model);
+    void Move();
+    void Set(EnemyInfo info);
+};
+/////////////////////////////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////////////////////////////
+class Bullet : public Chara {
+private:
+public:
+    Bullet();
+    Bullet(const char *filename);
+    Bullet(OBJMESH model);
+    void Move();
+    void Set(Vector3f p, Vector3f v, Vector3f a);
+};
