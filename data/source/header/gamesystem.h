@@ -58,6 +58,12 @@ private:
     GameMode System();
     void InitScene();
 
+    void PlayerMove();
+    void PlayerAttack();
+    void EnemyMove();
+    void EnemyAttack();
+    void BulletMove();
+
 public:
     MainGame();
     static Uint32 Timer(Uint32 interval, void *pram);

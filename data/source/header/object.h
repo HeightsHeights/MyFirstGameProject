@@ -48,7 +48,7 @@ public:
     Chara();
     Chara(const char *filename);
     Chara(OBJMESH model);
-    //virtual void move() = 0;
+    void move();
 };
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -59,7 +59,6 @@ public:
     Player();
     Player(const char *filename);
     Player(OBJMESH model);
-    //void move();
 };
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -70,7 +69,6 @@ public:
     Enemy();
     Enemy(const char *filename);
     Enemy(OBJMESH model);
-    //void move();
 };
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -81,5 +79,4 @@ public:
     Bullet();
     Bullet(const char *filename);
     Bullet(OBJMESH model);
-    //void move();
 };
