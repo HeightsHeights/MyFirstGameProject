@@ -15,9 +15,8 @@ Chara::Chara(OBJMESH model)
     : Object(model)
 {
 }
-void Chara::move()
+void Chara::Move()
 {
-    position = position + speed;
 }
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -34,6 +33,10 @@ Player::Player(OBJMESH model)
     : Chara(model)
 {
 }
+void Player::Move()
+{
+    position = position + speed;
+}
 ///////////////////////////////////////////////////////////////////////////////
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -47,6 +50,9 @@ Enemy::Enemy(const char *filename)
 }
 Enemy::Enemy(OBJMESH model)
     : Chara(model)
+{
+}
+void Enemy::Move()
 {
 }
 ///////////////////////////////////////////////////////////////////////////////
@@ -63,4 +69,8 @@ Bullet::Bullet(const char *filename)
 Bullet::Bullet(OBJMESH model)
     : Chara(model)
 {
+}
+void Bullet::Move()
+{
+    position = position + speed;
 }

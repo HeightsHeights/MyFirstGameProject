@@ -113,7 +113,7 @@ void Controller_Joystic::Read_State_Controller()
         state.Ry_axis = -1;
     }
 
-    printf("Lx:%4f Ly:%4f Rx:%4f Ry:%4f\n", state.Lx_axis, state.Ly_axis, state.Rx_axis, state.Ry_axis);
+    //printf("Lx:%4f Ly:%4f Rx:%4f Ry:%4f\n", state.Lx_axis, state.Ly_axis, state.Rx_axis, state.Ry_axis);
 
     if (SDL_JoystickGetButton(joystick, 5) > 0) {
         state.button[B_SHOOT_DICITION] = true;

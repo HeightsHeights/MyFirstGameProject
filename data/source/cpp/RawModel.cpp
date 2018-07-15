@@ -283,6 +283,6 @@ void OBJMESH::Copy(OBJMESH model)
     Vertex_Buffer_Object = model.Vertex_Buffer_Object;
     Normal_Buffer_Object = model.Normal_Buffer_Object;
 
-    Index_Buffer       = model.Normal_Buffer_Object;
+    Index_Buffer       = model.Index_Buffer;
     number_of_position = model.number_of_position;
 }

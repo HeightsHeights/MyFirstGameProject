@@ -48,15 +48,20 @@ public:
 class MainGame : public Scene {
 private:
     Player player;
+    Object pointer;
     Enemy enemy[MAX_ENEMY];
     Bullet player_bullet[MAX_PLAYER_BULLET];
     Bullet enemy_bullet[MAX_ENEMY_BULLET];
 
     static unsigned int time;
 
+    OBJMESH bullet;
+
     void Render();
     GameMode System();
     void InitScene();
+
+    void MainGameSystemManager();
 
     void PlayerMove();
     void PlayerAttack();

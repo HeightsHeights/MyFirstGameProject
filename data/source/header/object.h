@@ -37,6 +37,7 @@ public:
 class Chara : public Object {
 private:
 public:
+    bool exist;
     unsigned int HP;
     Vector3f aimpoint;
     Vector3f forward;
@@ -48,7 +49,7 @@ public:
     Chara();
     Chara(const char *filename);
     Chara(OBJMESH model);
-    void move();
+    virtual void Move();
 };
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -56,9 +57,12 @@ public:
 class Player : public Chara {
 private:
 public:
+    unsigned int attack_span;
+
     Player();
     Player(const char *filename);
     Player(OBJMESH model);
+    void Move();
 };
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -69,6 +73,7 @@ public:
     Enemy();
     Enemy(const char *filename);
     Enemy(OBJMESH model);
+    void Move();
 };
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -79,4 +84,5 @@ public:
     Bullet();
     Bullet(const char *filename);
     Bullet(OBJMESH model);
+    void Move();
 };
