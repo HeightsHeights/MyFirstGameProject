@@ -1,4 +1,5 @@
 #include "../header/object.h"
+#include <cmath>
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -35,6 +36,7 @@ Player::Player(OBJMESH model)
 }
 void Player::Move()
 {
+    speed    = speed + accel;
     position = position + speed;
 }
 ///////////////////////////////////////////////////////////////////////////////
@@ -54,6 +56,18 @@ Enemy::Enemy(OBJMESH model)
 }
 void Enemy::Move()
 {
+    //speed    = speed + accel;
+    //position = position + speed;
+    angle += 1.0f;
+    position = position + *new Vector3f(0, std::cos(angle * M_PI / 180) / 10, -0.05f);
+}
+void Enemy::Set(Vector3f p, Vector3f v, Vector3f a)
+{
+    exist    = true;
+    position = p;
+    speed    = v;
+    accel    = a;
+    angle    = 0;
 }
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -72,5 +86,13 @@ Bullet::Bullet(OBJMESH model)
 }
 void Bullet::Move()
 {
+    speed    = speed + accel;
     position = position + speed;
+}
+void Bullet::Set(Vector3f p, Vector3f v, Vector3f a)
+{
+    exist    = true;
+    position = p;
+    speed    = v;
+    accel    = a;
 }

@@ -12,6 +12,52 @@ typedef enum {
     OTYPE_Enemy_Bullet  = 4,
     OTYPE_Other         = 5
 } Object_Type;
+
+typedef enum {
+    ET_NULL   = 0,
+    ET_Sphere = 1,
+    ET_Ufo    = 2,
+    ET_Plane  = 3,
+    ET_NUMBER = 4,
+} EnemyType;
+
+typedef enum {
+    EST_NULL        = 0,
+    EST_Forward     = 1,
+    EST_Machine_Aim = 2,
+} EnemyShotType;
+
+typedef enum {
+    ESST_NULL          = 0,
+    ESST_Always        = 1,
+    ESST_Delay         = 2,
+    ESST_WaitUntilStop = 3,
+} EnemyShotStartType;
+
+typedef enum {
+    EMT_NULL       = 0,
+    EMT_SpeedAccel = 1,
+    EMT_Forward    = 2,
+    EMT_Sin        = 3,
+    EMT_Spiral     = 4,
+    EMT_StayPoint  = 5,
+} EnemyMoveType;
+
+typedef enum {
+    EMD_NULL    = 0,
+    EMD_toRight = 1,
+    EMD_toLeft  = 2,
+    EMD_toFront = 3,
+    EMD_toBack  = 4,
+} EnemyMoveDirection;
+
+typedef enum {
+    EDT_NULL     = 0,
+    EDT_toPlayer = 1,
+    EDT_Forward  = 2,
+    EDT_Custom   = 3,
+} EnemyDirectionType;
+
 /////////////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -38,7 +84,7 @@ class Chara : public Object {
 private:
 public:
     bool exist;
-    unsigned int HP;
+    unsigned int hp;
     Vector3f aimpoint;
     Vector3f forward;
     Vector3f speed;
@@ -70,10 +116,21 @@ public:
 class Enemy : public Chara {
 private:
 public:
+    EnemyMoveType enemy_move_type;
+    EnemyShotType enemy_shot_type;
+
+    Vector3f point;
+    float angle;
+
+    unsigned int spawn_time;
+    unsigned int despawn_time;
+
     Enemy();
     Enemy(const char *filename);
     Enemy(OBJMESH model);
     void Move();
+    void Set(Vector3f p, Vector3f v, Vector3f a);
+    void SetEnemyInfo();
 };
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -85,4 +142,35 @@ public:
     Bullet(const char *filename);
     Bullet(OBJMESH model);
     void Move();
+    void Set(Vector3f p, Vector3f v, Vector3f a);
 };
+
+/////////////////////////////////////////////////////////////////////////////
+//敵 スポーン時間　デスポーン時間　敵の形　敵の移動方法　敵の移動方向　敵の向き設定　敵の攻撃方法　敵の攻撃開始の設定　敵のHP　敵の攻撃開始時間　敵の攻撃スパン　敵のおおまかな攻撃回数　敵の初期位置　敵の初期向き　敵のスピード 敵の加速度　敵の目的位置
+/////////////////////////////////////////////////////////////////////////////
+
+typedef struct {
+    unsigned int spawn_time;
+    unsigned int despawn_time;
+
+    EnemyType enemy_type;
+    EnemyMoveType enemy_move_type;
+    EnemyMoveDirection enemy_move_direction;
+    EnemyDirectionType enemy_direction_type;
+
+    EnemyShotType enemy_shot_type;
+    EnemyShotStartType enemy_shot_start_type;
+
+    unsigned int hp;
+
+    unsigned int attack_delay;
+    unsigned int attack_span;
+    unsigned int attack_times;
+
+    Vector3f enemy_position;
+    Vector3f enemy_rotation;
+    Vector3f enemy_speed;
+    Vector3f enemy_accel;
+
+    Vector3f point;
+} EnemyInfo;

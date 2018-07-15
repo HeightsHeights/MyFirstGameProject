@@ -5,3 +5,4 @@
 
 void LookatVector(Vector3f direction);
 void LookatPoint(Vector3f loc, Vector3f point);
+void TranslateVector(Vector3f delta);

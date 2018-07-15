@@ -35,6 +35,7 @@ class OBJVEC2 : public Vector2f {
 public:
     OBJVEC2();
     OBJVEC2(float nx, float ny);
+    
     operator float *();
     operator const float() const;
 };

@@ -68,9 +68,8 @@ int main(int argc, char *argv[])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader.start();
 
-        Render();
-
         GameSystem::SystemUpdate();
+        glFlush();
 
         shader.stop();
         SDL_GL_SwapWindow(GameManager::window);
@@ -183,7 +182,8 @@ bool InitGL(int argc, char *argv[])
     glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
 
     //　Light0の場所の設定
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+    //glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+    glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
 
     // glEnable(GL_LIGHTING);
     // glEnable(GL_LIGHT0);
@@ -199,25 +199,8 @@ bool InitGL(int argc, char *argv[])
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 描画
+//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void Render()
-{
-
-    //マニュピレーター
-    glBegin(GL_LINES);
-    for (int i = 0; i < 3; i++) {
-        glColor4fv(manupilator_color[i]);
-        glVertex3dv(manupilator_vertex[manupilator_edge[i][0]]);
-        glVertex3dv(manupilator_vertex[manupilator_edge[i][1]]);
-    }
-    glEnd();
-
-    glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
-
-    glFlush();
-}
-
 void Clear()
 {
     SDL_RenderClear(GameManager::renderer);

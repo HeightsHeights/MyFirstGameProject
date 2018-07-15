@@ -55,7 +55,10 @@ private:
 
     static unsigned int time;
 
-    OBJMESH bullet;
+    OBJMESH m_bullet;
+    OBJMESH m_enemy[ET_NUMBER];
+
+    std::vector<EnemyInfo> enemyinfo;
 
     void Render();
     GameMode System();

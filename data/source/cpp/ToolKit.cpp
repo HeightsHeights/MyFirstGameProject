@@ -18,3 +18,8 @@ void LookatPoint(Vector3f loc, Vector3f point)
 {
     LookatVector(point - loc);
 }
+
+void TranslateVector(Vector3f delta)
+{
+    glTranslated(delta.x, delta.y, delta.z);
+}
