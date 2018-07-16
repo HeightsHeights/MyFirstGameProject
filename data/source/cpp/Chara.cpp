@@ -1,4 +1,5 @@
 #include "../header/object.h"
+#include "../header/toolkit.h"
 #include <cmath>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -58,33 +59,77 @@ void Enemy::Move()
 {
 
     switch (enemy_move_type) {
-    case EMT_Forward:
-        position = position + Vector3f(0, 0, -1);
+    case EMT_Forward: {
+        position = position + Vector3f(0, 0, -enemy_speed_magnitude);
+        forward  = Vector3f(0, 0, -enemy_speed_magnitude);
         break;
-    case EMT_Sin:
+    }
+    case EMT_Sin: {
+        subargument[0] += 0.5f;
+        if (subargument[0] >= 360) {
+            subargument[0] = 0;
+        }
+        Vector3f v;
         switch (enemy_move_direction) {
         case EMD_toFront:
+            v = *new Vector3f(0, std::cos(subargument[0] * M_PI / 180) / 20, -enemy_speed_magnitude);
             break;
         case EMD_toBack:
+            v = *new Vector3f(0, std::cos(subargument[0] * M_PI / 180) / 20, enemy_speed_magnitude);
             break;
         case EMD_toRight:
+            v = *new Vector3f(-enemy_speed_magnitude, std::cos(subargument[0] * M_PI / 180) / 20, 0);
             break;
         case EMD_toLeft:
+            v = *new Vector3f(enemy_speed_magnitude, std::cos(subargument[0] * M_PI / 180) / 20, 0);
+            break;
+        }
+        position = position + v;
+        forward  = v.normalize();
+        break;
+    }
+    case EMT_Spiral: {
+        subargument[0]++;
+        if (subargument[0] >= 360) {
+            subargument[0] = 0;
+        }
+        float angle = subargument[0] * M_PI / 180;
+        switch (enemy_move_direction) {
+        case EMD_toFront:
+            Vector3f v = *new Vector3f(std::sin(angle) / 20, std::cos(angle) / 20, -enemy_speed_magnitude);
+            forward    = v;
+            position   = position + v;
             break;
         }
         break;
-    case EMT_Spiral:
-        break;
-    case EMT_StayPoint:
+    }
+    case EMT_StayPoint: {
+
+        if (living_time + spawn_time >= despawn_time) {
+            switch (enemy_move_direction) {
+            case EMD_toFront:
+                position = position + *new Vector3f(0, 0, -enemy_speed_magnitude);
+                break;
+            case EMD_toBack:
+                position = position + *new Vector3f(0, 0, enemy_speed_magnitude);
+                break;
+            case EMD_toRight:
+                position = position + *new Vector3f(-enemy_speed_magnitude, 0, 0);
+                break;
+            case EMD_toLeft:
+                position = position + *new Vector3f(enemy_speed_magnitude, 0, 0);
+                break;
+            }
+        } else if ((point - position).magnitude() > enemy_speed_magnitude) {
+            position = position + (point - position).normalize() * enemy_speed_magnitude;
+        }
         break;
     }
+    }
 
-    //speed    = speed + accel;
-    //position = position + speed;
-
-    static float angle = 0;
-    angle += 1.0f;
-    position = position + *new Vector3f(0, std::cos(angle * M_PI / 180) / 10, -0.05f);
+    if (!IsBetween(position.x, -50, 50) || !IsBetween(position.y, -50, 50) || !IsBetween(position.z, -30, 150)) {
+        exist = false;
+    }
 }
 void Enemy::Set(EnemyInfo info)
 {
@@ -119,10 +164,22 @@ void Enemy::Set(EnemyInfo info)
     attack_span  = info.attack_span;
     attack_times = info.attack_times;
 
-    position = info.enemy_position;
-    rotation = info.enemy_rotation;
-    speed    = info.enemy_speed;
-    accel    = info.enemy_accel;
+    attack_span_a_span_to_a_span = info.attack_span_a_span_to_a_span;
+    attack_times_in_a_span       = info.attack_times_in_a_span;
+
+    shot_speed       = info.shot_speed;
+    shot_accel       = info.shot_accel;
+    number_of_bullet = info.number_of_bullet;
+    interval_angle   = info.interval_angle;
+    shoot_width      = info.shoot_width;
+
+    position              = info.enemy_position;
+    rotation              = info.enemy_rotation;
+    speed                 = info.enemy_speed;
+    enemy_speed_magnitude = info.enemy_speed_magnitude;
+
+    accel                 = info.enemy_accel;
+    enemy_accel_magnitude = info.enemy_accel_magnitude;
 
     point = info.point;
 }
@@ -145,6 +202,9 @@ void Bullet::Move()
 {
     speed    = speed + accel;
     position = position + speed;
+    if (!IsBetween(position.x, -50, 50) || !IsBetween(position.y, -50, 50) || !IsBetween(position.z, -20, 150)) {
+        exist = false;
+    }
 }
 void Bullet::Set(Vector3f p, Vector3f v, Vector3f a)
 {

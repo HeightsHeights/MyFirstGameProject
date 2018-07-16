@@ -8,6 +8,8 @@
 #include "../header/ui_image.h"
 #include <SDL2/SDL_mixer.h>
 
+
+
 //window系の初期化
 bool InitWindow();
 //gl系の初期化

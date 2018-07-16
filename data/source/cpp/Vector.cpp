@@ -33,11 +33,7 @@ Vector3f Vector3f::operator-(Vector3f obj)
 }
 Vector3f Vector3f::operator*(float scalar)
 {
-    this->x *= scalar;
-    this->y *= scalar;
-    this->z *= scalar;
-
-    return *this;
+    return *new Vector3f(this->x * scalar, this->y * scalar, this->z * scalar);
 }
 Vector3f Vector3f::operator/(float scalar)
 {

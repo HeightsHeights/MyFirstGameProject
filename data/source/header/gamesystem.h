@@ -8,7 +8,7 @@
 
 #define MAX_ENEMY 30
 #define MAX_PLAYER_BULLET 100
-#define MAX_ENEMY_BULLET 200
+#define MAX_ENEMY_BULLET 1000
 
 typedef enum {
     gamemode_title = 0,

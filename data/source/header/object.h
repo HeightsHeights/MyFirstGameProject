@@ -22,9 +22,14 @@ typedef enum {
 } EnemyType;
 
 typedef enum {
-    EST_NULL        = 0,
-    EST_Forward     = 1,
-    EST_Machine_Aim = 2,
+    EST_NULL                                      = 0,
+    EST_Forward                                   = 1,
+    EST_Machine_Aim                               = 2,
+    EST_Follow_Enemy_Direction                    = 3,
+    EST_Scattering_Bullets_Forward                = 4,
+    EST_Scattering_Bullets_Machine_Aim            = 5,
+    EST_Scattering_Bullets_Follow_Enemy_Direction = 6,
+    EST_Random_Scattering                         = 7,
 } EnemyShotType;
 
 typedef enum {
@@ -112,7 +117,7 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-//敵 スポーン時間　デスポーン時間　敵の形　敵の移動方法　敵の移動方向　敵の向き設定　敵の攻撃方法　敵の攻撃開始の設定　敵のHP　敵の攻撃開始時間　敵の攻撃スパン　敵のおおまかな攻撃回数　敵の初期位置　敵の初期向き　敵のスピード 敵の加速度　敵の目的位置
+//敵 スポーン時間　デスポーン時間　敵の形　敵の移動方法　敵の移動方向　敵の向き設定　敵の攻撃方法　敵の攻撃開始の設定　敵のHP　敵の攻撃開始時間　敵の攻撃スパン　敵のおおまかな攻撃回数　敵の初期位置　敵の初期向き　敵のスピードの向き　スピードの大きさ　敵の加速度の向き　加速度の大きさ敵の目的位置
 /////////////////////////////////////////////////////////////////////////////
 
 typedef struct {
@@ -133,10 +138,21 @@ typedef struct {
     unsigned int attack_span;
     unsigned int attack_times;
 
+    unsigned int attack_span_a_span_to_a_span;
+    unsigned int attack_times_in_a_span;
+
+    float shot_speed;
+    float shot_accel;
+    unsigned int number_of_bullet;
+    float interval_angle;
+    float shoot_width;
+
     Vector3f enemy_position;
     Vector3f enemy_rotation;
     Vector3f enemy_speed;
+    float enemy_speed_magnitude;
     Vector3f enemy_accel;
+    float enemy_accel_magnitude;
 
     Vector3f point;
 } EnemyInfo;
@@ -148,6 +164,8 @@ private:
 public:
     unsigned int spawn_time;
     unsigned int despawn_time;
+
+    unsigned int living_time;
 
     EnemyType enemy_type;
     EnemyMoveType enemy_move_type;
@@ -161,11 +179,26 @@ public:
 
     unsigned int attack_delay;
     unsigned int attack_span;
+    unsigned int attack_span_count;
     unsigned int attack_times;
+
+    unsigned int attack_span_a_span_to_a_span;
+    unsigned int attack_times_in_a_span;
+    unsigned int attack_span_a_span_to_a_span_count;
+    unsigned int attack_times_in_a_span_count;
+
+    float shot_speed;
+    float shot_accel;
+    unsigned int number_of_bullet;
+    float interval_angle;
+    float shoot_width;
+
+    float enemy_speed_magnitude;
+    float enemy_accel_magnitude;
 
     Vector3f point;
 
-    float subargument;
+    float subargument[2];
 
     Enemy();
     Enemy(const char *filename);
