@@ -30,6 +30,7 @@ typedef enum {
     EST_Scattering_Bullets_Machine_Aim            = 5,
     EST_Scattering_Bullets_Follow_Enemy_Direction = 6,
     EST_Random_Scattering                         = 7,
+    EST_Boss                                      = 8,
 } EnemyShotType;
 
 typedef enum {
@@ -67,6 +68,11 @@ typedef enum {
     EDT_Custom   = 3,
 } EnemyDirectionType;
 
+typedef enum {
+    BT_NULL   = 0,
+    BT_Player = 1,
+    BT_Enemy  = 2,
+} Bullet_Type;
 /////////////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -201,10 +207,10 @@ public:
     float enemy_accel_magnitude;
 
     Vector3f point;
-    Vector3f shot_to_point[1];
-    Vector3f shot_from_point[1];
+    Vector3f shot_to_point[3];
+    Vector3f shot_from_point[3];
 
-    float subargument[2];
+    float subargument[3];
 
     Enemy();
     Enemy(const char *filename);
@@ -222,5 +228,5 @@ public:
     Bullet(const char *filename);
     Bullet(OBJMESH model);
     void Move();
-    void Set(Vector3f p, Vector3f v, Vector3f a);
+    void Set(Vector3f p, Vector3f v, Vector3f a, Bullet_Type bullet_type);
 };

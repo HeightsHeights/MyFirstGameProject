@@ -1,6 +1,16 @@
 #include "../header/collider.h"
 #include <cmath>
 
+Sphere::Sphere()
+{
+}
+
+Sphere::Sphere(Vector3f c, float arg)
+{
+    center = c;
+    r      = arg;
+}
+
 Collider::Collider()
 {
 }

@@ -4,7 +4,7 @@
 Title::Title()
     : Scene()
 {
-    player = *new Player("data/data_3d/player.obj");
+    player = *new Player("data/data_3d/ufo01.obj");
 }
 
 void Title::InitScene()
@@ -30,4 +30,6 @@ void Title::Render()
     glRotated(player.rotation.y += 0.01, 0, 1, 0);
     player.Draw();
     glPopMatrix();
+
+    glutSolidSphere(1, 10, 10);
 }

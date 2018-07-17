@@ -5,7 +5,7 @@ class Sphere {
 private:
 public:
     Sphere();
-    Sphere(Vector3f c, float r);
+    Sphere(Vector3f c, float arg);
     Vector3f center;
     float r;
 };

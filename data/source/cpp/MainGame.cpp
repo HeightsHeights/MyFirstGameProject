@@ -1,7 +1,7 @@
 #include "../header/gamesystem.h"
 #include "../header/toolkit.h"
 
-#define TIME 60
+#define TIME 700
 //https://www.youtube.com/watch?v=TsmE6PYazxA
 
 unsigned int MainGame::time = 0;
@@ -12,6 +12,7 @@ MainGame::MainGame()
     SetEnemyInfo();
 
     player = *new Player("data/data_3d/player.obj");
+    player.collider.spheres.push_back(Sphere(Vector3f(0, 0, 0), 1));
 
     m_bullet.LoadFile("data/data_3d/bullet01.obj");
     m_enemy[ET_Sphere].LoadFile("data/data_3d/ufo01.obj");
@@ -68,6 +69,26 @@ GameMode MainGame::System()
     /////////////////////////
     // 当たり判定
     /////////////////////////
+    for (int i = 0; i < MAX_PLAYER_BULLET; i++) {
+        if (player_bullet[i].exist) {
+            for (int j = 0; j < MAX_ENEMY; j++) {
+                if (enemy[j].exist) {
+                    if (player_bullet[i].collider.isCollision(enemy[j].collider)) {
+                        player_bullet[i].exist = false;
+                        enemy[j].exist         = false;
+                    }
+                }
+            }
+        }
+    }
+    for (int i = 0; i < MAX_ENEMY_BULLET; i++) {
+        if (enemy_bullet[i].exist) {
+            if (enemy_bullet[i].collider.isCollision(player.collider)) {
+                enemy_bullet[i].exist = false;
+                printf("hit\n");
+            }
+        }
+    }
 
 startyet:
 
@@ -124,6 +145,11 @@ void MainGame::Render()
                 LookatVector(enemy[i].forward);
                 break;
             }
+            switch (enemy[i].enemy_type) {
+            case ET_Ufo:
+                glScaled(3.5, 3.5, 3.5);
+                break;
+            }
             enemy[i].Draw();
             glPopMatrix();
         }
@@ -147,7 +173,7 @@ void MainGame::Render()
         if (enemy_bullet[i].exist) {
             glPushMatrix();
             TranslateVector(enemy_bullet[i].position);
-            glScaled(0.6, 0.6, 0.6);
+            glScaled(0.5, 0.5, 0.5);
             enemy_bullet[i].Draw();
             glPopMatrix();
         }
@@ -189,8 +215,21 @@ searchagain:
 void MainGame::PlayerMove()
 {
 
-    player.aimpoint.x = player.position.x -= (Controller_Maneger::Joystics[0].state.button[B_SHIFT_BACK]) ? Controller_Maneger::Joystics[0].state.Lx_axis * 0.03 : Controller_Maneger::Joystics[0].state.Lx_axis * 0.1;
-    player.aimpoint.y = player.position.y -= (Controller_Maneger::Joystics[0].state.button[B_SHIFT_BACK]) ? Controller_Maneger::Joystics[0].state.Ly_axis * 0.03 : Controller_Maneger::Joystics[0].state.Ly_axis * 0.1;
+    player.collider.spheres[0].center.x = player.aimpoint.x = player.position.x -= (Controller_Maneger::Joystics[0].state.button[B_SHIFT_BACK]) ? Controller_Maneger::Joystics[0].state.Lx_axis * 0.03 : Controller_Maneger::Joystics[0].state.Lx_axis * 0.1;
+    player.collider.spheres[0].center.y = player.aimpoint.y = player.position.y -= (Controller_Maneger::Joystics[0].state.button[B_SHIFT_BACK]) ? Controller_Maneger::Joystics[0].state.Ly_axis * 0.03 : Controller_Maneger::Joystics[0].state.Ly_axis * 0.1;
+
+    if (player.position.x > 12) {
+        player.collider.spheres[0].center.x = player.aimpoint.x = player.position.x = 12;
+    }
+    if (player.position.x < -12) {
+        player.collider.spheres[0].center.x = player.aimpoint.x = player.position.x = -12;
+    }
+    if (player.position.y > 8) {
+        player.collider.spheres[0].center.y = player.aimpoint.y = player.position.y = 8;
+    }
+    if (player.position.y < -8) {
+        player.collider.spheres[0].center.y = player.aimpoint.y = player.position.y = -8;
+    }
 
     player.aimpoint.x -= Controller_Maneger::Joystics[0].state.Rx_axis * 15;
     player.aimpoint.y -= Controller_Maneger::Joystics[0].state.Ry_axis * 15;
@@ -203,7 +242,7 @@ void MainGame::PlayerAttack()
             for (int i = 0; i < MAX_PLAYER_BULLET; i++) {
                 if (!player_bullet[i].exist) {
                     player_bullet[i] = *new Bullet(m_bullet);
-                    player_bullet[i].Set(player.position, (player.aimpoint - player.position).normalize() * 1.5, *new Vector3f(0, 0, 0));
+                    player_bullet[i].Set(player.position, (player.aimpoint - player.position).normalize() * 1.5, *new Vector3f(0, 0, 0), BT_Player);
                     break;
                 }
             }
@@ -237,6 +276,9 @@ void MainGame::EnemyAttack()
                 break;
             case ESST_WaitUntilStop:
                 if (enemy[i].enemy_move_type == EMT_Ufo && enemy[i].subargument[1] > 0) {
+                    break;
+                }
+                if (enemy[i].enemy_move_type == EMT_Boss && enemy[i].subargument[2] > 0) {
                     break;
                 }
                 if ((enemy[i].point - enemy[i].position).magnitude() > enemy[i].enemy_speed_magnitude) {
@@ -289,7 +331,7 @@ void MainGame::EnemyAttack()
                     for (int j = 0; j < MAX_ENEMY_BULLET; j++) {
                         if (!enemy_bullet[j].exist) {
                             enemy_bullet[j] = *new Bullet(m_bullet);
-                            enemy_bullet[j].Set(enemy[i].position, v * enemy[i].shot_speed, v * enemy[i].shot_accel);
+                            enemy_bullet[j].Set(enemy[i].position, v * enemy[i].shot_speed, v * enemy[i].shot_accel, BT_Enemy);
 
                             v = v.Rotate(rotation_axis, -enemy[i].interval_angle);
                             break;
@@ -322,7 +364,7 @@ void MainGame::EnemyAttack()
                     for (int j = 0; j < MAX_ENEMY_BULLET; j++) {
                         if (!enemy_bullet[j].exist) {
                             enemy_bullet[j] = *new Bullet(m_bullet);
-                            enemy_bullet[j].Set(enemy[i].position, forward * enemy[i].shot_speed, forward * enemy[i].shot_accel);
+                            enemy_bullet[j].Set(enemy[i].position, forward * enemy[i].shot_speed, forward * enemy[i].shot_accel, BT_Enemy);
                             break;
                         }
                     }
@@ -335,7 +377,7 @@ void MainGame::EnemyAttack()
                         for (int j = 0; j < MAX_ENEMY_BULLET; j++) {
                             if (!enemy_bullet[j].exist) {
                                 enemy_bullet[j] = *new Bullet(m_bullet);
-                                enemy_bullet[j].Set(enemy[i].position, v * enemy[i].shot_speed, v * enemy[i].shot_accel);
+                                enemy_bullet[j].Set(enemy[i].position, v * enemy[i].shot_speed, v * enemy[i].shot_accel, BT_Enemy);
 
                                 v = v.Rotate(forward, 360 / enemy[i].number_of_bullet);
                                 break;
@@ -353,9 +395,30 @@ void MainGame::EnemyAttack()
                     for (int j = 0; j < MAX_ENEMY_BULLET; j++) {
                         if (!enemy_bullet[j].exist) {
                             enemy_bullet[j] = *new Bullet(m_bullet);
-                            enemy_bullet[j].Set(enemy[i].position, v * ((RandBetween(3, 20) / (20 / enemy[i].shot_speed))), v * enemy[i].shot_accel);
+                            enemy_bullet[j].Set(enemy[i].position, v * ((RandBetween(3, 20) / (20 / enemy[i].shot_speed))), v * enemy[i].shot_accel, BT_Enemy);
                             break;
                         }
+                    }
+                }
+            } else if (enemy[i].enemy_shot_type == EST_Boss) {
+                enemy[i].attack_times = 1;
+                for (int k = 0; k < 3; k++) {
+                    Vector3f v = (enemy[i].shot_from_point[k] - enemy[i].position).normalize();
+                    for (int j = 0; j < MAX_ENEMY_BULLET; j++) {
+                        if (!enemy_bullet[j].exist) {
+                            enemy_bullet[j] = *new Bullet(m_bullet);
+                            enemy_bullet[j].Set(enemy[i].shot_from_point[k], v * enemy[i].shot_speed, v * enemy[i].shot_accel, BT_Enemy);
+                            break;
+                        }
+                    }
+                }
+
+                for (int j = 0; j < MAX_ENEMY_BULLET; j++) {
+                    if (!enemy_bullet[j].exist) {
+                        Vector3f v      = *new Vector3f(0, 0, -1);
+                        enemy_bullet[j] = *new Bullet(m_bullet);
+                        enemy_bullet[j].Set(enemy[i].position, v * enemy[i].shot_speed * 4, v * enemy[i].shot_accel, BT_Enemy);
+                        break;
                     }
                 }
             }
