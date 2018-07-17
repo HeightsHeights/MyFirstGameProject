@@ -1,3 +1,4 @@
+
 #include "../header/object.h"
 #include "../header/toolkit.h"
 #include <cmath>
@@ -55,7 +56,7 @@ Enemy::Enemy(OBJMESH model)
     : Chara(model)
 {
 }
-void Enemy::Move()
+void Enemy::Move(Player player)
 {
 
     switch (enemy_move_type) {
@@ -103,25 +104,55 @@ void Enemy::Move()
         }
         break;
     }
+    case EMT_GoPoint: {
+        if ((point - position).magnitude() > enemy_speed_magnitude) {
+            position = position + (point - position).normalize() * enemy_speed_magnitude;
+            forward  = (point - position).normalize();
+        } else {
+            enemy_move_type = EMT_StayPoint;
+        }
+        break;
+    }
     case EMT_StayPoint: {
 
         if (living_time + spawn_time >= despawn_time) {
-            switch (enemy_move_direction) {
-            case EMD_toFront:
-                position = position + *new Vector3f(0, 0, -enemy_speed_magnitude);
-                break;
-            case EMD_toBack:
-                position = position + *new Vector3f(0, 0, enemy_speed_magnitude);
-                break;
-            case EMD_toRight:
-                position = position + *new Vector3f(-enemy_speed_magnitude, 0, 0);
-                break;
-            case EMD_toLeft:
-                position = position + *new Vector3f(enemy_speed_magnitude, 0, 0);
-                break;
-            }
+            enemy_move_type = EMT_Away;
         } else if ((point - position).magnitude() > enemy_speed_magnitude) {
-            position = position + (point - position).normalize() * enemy_speed_magnitude;
+            position = point;
+        }
+        break;
+    }
+    case EMT_Away: {
+        switch (enemy_move_direction) {
+        case EMD_toFront:
+            position = position + *new Vector3f(0, 0, -enemy_speed_magnitude);
+            break;
+        case EMD_toBack:
+            position = position + *new Vector3f(0, 0, enemy_speed_magnitude);
+            break;
+        case EMD_toRight:
+            position = position + *new Vector3f(-enemy_speed_magnitude, 0, 0);
+            break;
+        case EMD_toLeft:
+            position = position + *new Vector3f(enemy_speed_magnitude, 0, 0);
+            break;
+        }
+        break;
+    }
+    case EMT_Ufo: {
+
+        if ((point - position).magnitude() > enemy_speed_magnitude && subargument[1] == 0) {
+            Vector3f v;
+            v        = (point - position).normalize();
+            position = position + v * enemy_speed_magnitude;
+            forward  = v;
+        } else if (living_time + spawn_time >= despawn_time) {
+            enemy_move_type = EMT_Away;
+        } else {
+            subargument[1] = 1;
+            point.y        = player.position.y;
+            position       = position + (point - position).normalize() * 0.01f;
+            forward        = forward.Rotate(Vector3f(0, 1, 0), 0.5f);
         }
         break;
     }
@@ -182,6 +213,11 @@ void Enemy::Set(EnemyInfo info)
     enemy_accel_magnitude = info.enemy_accel_magnitude;
 
     point = info.point;
+
+    attack_span_a_span_to_a_span_count = 0;
+    attack_span_count                  = 0;
+    attack_times_in_a_span_count       = 0;
+    subargument[0] = subargument[1] = 0;
 }
 ///////////////////////////////////////////////////////////////////////////////
 //

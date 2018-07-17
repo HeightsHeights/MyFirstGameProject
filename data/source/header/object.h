@@ -45,7 +45,11 @@ typedef enum {
     EMT_Forward    = 2,
     EMT_Sin        = 3,
     EMT_Spiral     = 4,
-    EMT_StayPoint  = 5,
+    EMT_GoPoint    = 5,
+    EMT_StayPoint  = 6,
+    EMT_Away       = 7,
+    EMT_Ufo        = 8,
+    EMT_Boss       = 9,
 } EnemyMoveType;
 
 typedef enum {
@@ -197,13 +201,15 @@ public:
     float enemy_accel_magnitude;
 
     Vector3f point;
+    Vector3f shot_to_point[1];
+    Vector3f shot_from_point[1];
 
     float subargument[2];
 
     Enemy();
     Enemy(const char *filename);
     Enemy(OBJMESH model);
-    void Move();
+    void Move(Player player);
     void Set(EnemyInfo info);
 };
 /////////////////////////////////////////////////////////////////////////////

@@ -1,7 +1,7 @@
 #include "../header/gamesystem.h"
 #include "../header/toolkit.h"
 
-#define TIME 130
+#define TIME 60
 //https://www.youtube.com/watch?v=TsmE6PYazxA
 
 unsigned int MainGame::time = 0;
@@ -11,13 +11,11 @@ MainGame::MainGame()
 {
     SetEnemyInfo();
 
-    player = *new Player("data/data_3d/untitled.obj");
+    player = *new Player("data/data_3d/player.obj");
 
     m_bullet.LoadFile("data/data_3d/bullet01.obj");
     m_enemy[ET_Sphere].LoadFile("data/data_3d/ufo01.obj");
-    //m_enemy[ET_Plane].LoadFile("data/data_3d/ufo plane free.obj");
-    //m_enemy[ET_Plane].LoadFile("data/data_3d/ufo plane free.obj");
-    m_enemy[ET_Plane].LoadFile("data/data_3d/ufo plane free.obj");
+    m_enemy[ET_Ufo].LoadFile("data/data_3d/boss.obj");
 
     pointer = *new Object("data/data_3d/pointer.obj");
 
@@ -217,7 +215,7 @@ void MainGame::EnemyMove()
 {
     for (int i = 0; i < MAX_ENEMY; i++) {
         if (enemy[i].exist) {
-            enemy[i].Move();
+            enemy[i].Move(player);
             if (enemy[i].position.z > 100) {
                 enemy[i].exist = false;
             }
@@ -238,6 +236,9 @@ void MainGame::EnemyAttack()
                 }
                 break;
             case ESST_WaitUntilStop:
+                if (enemy[i].enemy_move_type == EMT_Ufo && enemy[i].subargument[1] > 0) {
+                    break;
+                }
                 if ((enemy[i].point - enemy[i].position).magnitude() > enemy[i].enemy_speed_magnitude) {
                     continue;
                 }
@@ -259,7 +260,6 @@ void MainGame::EnemyAttack()
                     enemy[i].attack_times_in_a_span_count = 0;
                 }
             } else {
-
                 continue;
             }
 
@@ -348,7 +348,7 @@ void MainGame::EnemyAttack()
                 for (int k = 0; k < enemy[i].number_of_bullet; k++) {
                     Vector3f v;
                     do {
-                        v = Vector3f(RandBetween(0, 1000) - 500, RandBetween(0, 1000) - 500, -RandBetween(0, 500)).normalize();
+                        v = Vector3f(RandBetween(0, 1000) - 500, RandBetween(0, 1000) - 500, -RandBetween(600, 1000)).normalize();
                     } while (v.magnitude_second_power() == 0);
                     for (int j = 0; j < MAX_ENEMY_BULLET; j++) {
                         if (!enemy_bullet[j].exist) {

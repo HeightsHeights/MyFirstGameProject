@@ -4,7 +4,7 @@
 Title::Title()
     : Scene()
 {
-    player = *new Player("data/data_3d/untitled.obj");
+    player = *new Player("data/data_3d/player.obj");
 }
 
 void Title::InitScene()
