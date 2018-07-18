@@ -5,6 +5,9 @@
 const char* VERTEX_FILE   = "data/source/shader/vertexShader.vert";
 const char* FRAGMENT_FILE = "data/source/shader/fragmentShader.frag";
 
+ShaderManager::ShaderManager()
+{
+}
 ShaderManager::ShaderManager(const char* vertex_filename, const char* fragment_filename)
 {
     vertexShaderID   = loadShader(vertex_filename, GL_VERTEX_SHADER);
@@ -109,6 +112,10 @@ void ShaderManager::bindAttributes()
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 StaticShader::StaticShader()
+    : ShaderManager()
+{
+}
+StaticShader::StaticShader(bool boolean)
     : ShaderManager(VERTEX_FILE, FRAGMENT_FILE)
 {
 }

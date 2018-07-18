@@ -1,6 +1,5 @@
-
+#include "../header/audio.h"
 #include "../header/object.h"
-#include "../header/toolkit.h"
 #include <cmath>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -27,14 +26,20 @@ void Chara::Move()
 Player::Player()
     : Chara()
 {
+    color_type = CT_WHITE;
+    hp         = MAX_PLAYER_HP;
 }
 Player::Player(const char *filename)
     : Chara(filename)
 {
+    color_type = CT_WHITE;
+    hp         = MAX_PLAYER_HP;
 }
 Player::Player(OBJMESH model)
     : Chara(model)
 {
+    color_type = CT_WHITE;
+    hp         = MAX_PLAYER_HP;
 }
 void Player::Move()
 {
@@ -187,6 +192,8 @@ void Enemy::Move(Player player)
                     shot_from_point[i] = shot_from_point[i] + (v * enemy_speed_magnitude);
                 }
             } else {
+                Mix_PlayChannel(2, Audio_Manager::chunk[SE_Boss], 0);
+                Mix_PlayMusic(Audio_Manager::music[BGM_Boss], -1);
                 subargument[2]++;
             }
             break;
@@ -195,6 +202,9 @@ void Enemy::Move(Player player)
             float angle = subargument[0] * M_PI / 180;
             Vector3f v  = Vector3f(std::cos(angle) / 10, (2 * std::pow(std::cos(angle), 2) - 1) / 10, 0);
             subargument[0] += 0.2f;
+            if (subargument[0] >= 360) {
+                subargument[0] = 0;
+            }
             position = position + v;
             collider.MoveCollider(v);
             forward = forward.Rotate(Vector3f(0, 1, 0), 0.5f);
@@ -229,7 +239,6 @@ void Enemy::Set(EnemyInfo info)
         break;
     case ET_Ufo: {
         collider.spheres.push_back(Sphere(info.enemy_position, 3.5));
-
         Vector3f v         = Vector3f(0, 0, -10);
         shot_from_point[0] = info.enemy_position + v;
         shot_from_point[1] = info.enemy_position + v.Rotate(Vector3f(0, 1, 0), 120);
@@ -272,6 +281,9 @@ void Enemy::Set(EnemyInfo info)
     enemy_accel_magnitude = info.enemy_accel_magnitude;
 
     point = info.point;
+
+    color_type        = info.enemy_color_type;
+    bullet_color_type = info.bullet_color_type;
 
     attack_span_a_span_to_a_span_count = 0;
     attack_span_count                  = 0;

@@ -55,3 +55,45 @@ bool IsBetween(float n, float min, float max)
 {
     return min <= n && n <= max;
 }
+
+void printString(float x, float y, const char* str, int length)
+{
+    float z = -29.0f;
+    glRasterPos3f(x, y, z);
+
+    for (int i = 0; i < length; i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, str[i]);
+    }
+}
+
+void Colored(ColorType type)
+{
+
+    switch (type) {
+
+    case CT_WHITE:
+        glColor4d(1, 1, 1, 1);
+        break;
+    case CT_BLUE:
+        glColor4d(0, 0, 1, 1);
+        break;
+    case CT_RED:
+        glColor4d(1, 0, 0, 1);
+        break;
+    case CT_YELLLOW:
+        glColor4d(1, 1, 0, 1);
+        break;
+    case CT_GREEN:
+        glColor4d(0, 1, 0, 1);
+        break;
+    case CT_CYAN:
+        glColor4d(0, 1, 1, 1);
+        break;
+    case CT_ORANGE:
+        glColor4d(1, 0.27, 0, 1);
+        break;
+    case CT_PURPLE:
+        glColor4d(1, 0, 1, 1);
+        break;
+    }
+}

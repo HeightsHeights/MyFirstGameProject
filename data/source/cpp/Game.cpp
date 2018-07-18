@@ -22,23 +22,6 @@ void Clear();
 
 //*******************************************************************************************************************************************
 
-GLdouble manupilator_vertex[][3] = {
-    { 0.0, 0.0, 0.0 },
-    { 1.0, 0.0, 0.0 },
-    { 0.0, 1.0, 0.0 },
-    { 0.0, 0.0, 1.0 }
-};
-int manupilator_edge[][2] = {
-    { 0, 1 },
-    { 0, 2 },
-    { 0, 3 }
-};
-GLfloat manupilator_color[][4] = {
-    { 1.0f, 0.0f, 0.0f, 0.0f },
-    { 0.0f, 1.0f, 0.0f, 0.0f },
-    { 0.0f, 0.0f, 1.0f, 0.0f }
-};
-
 float light0_position[4] = { 0.0, 1000.0, 0.0, 1.0 };
 GLfloat light1pos[]      = { 5.0, 3.0, 0.0, 1.0 };
 
@@ -53,7 +36,7 @@ static const GLfloat lightamb[] = { 0.1f, 0.1f, 0.1f, 1.0f };
 
 SDL_Window *GameManager::window;
 SDL_Renderer *GameManager::renderer;
-
+StaticShader shader;
 int main(int argc, char *argv[])
 {
     if (!InitSystem(argc, argv)) {
@@ -61,11 +44,12 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    StaticShader shader = *new StaticShader();
+    shader = *new StaticShader(true);
 
     while (SDL_AtomicGet(&Controller_Maneger::atm) > 0 && Controller_Maneger::event.type != SDL_QUIT) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         shader.start();
 
         GameSystem::SystemUpdate();
@@ -104,6 +88,10 @@ bool InitSystem(int argc, char *argv[])
         return false;
     }
 
+    if (!Audio_Manager::Init_Audio()) {
+        printf("error load audio\n");
+        return false;
+    }
     return true;
 }
 
@@ -159,7 +147,7 @@ bool InitGL(int argc, char *argv[])
     glEnable(GL_TEXTURE_2D);
 
     glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
+    glCullFace(GL_FRONT);
 
     /**
  * 光源の環境光
@@ -185,7 +173,7 @@ bool InitGL(int argc, char *argv[])
     //glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
     glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
 
-    // glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHTING);
     // glEnable(GL_LIGHT0);
     // glLightfv(GL_LIGHT0, GL_DIFFUSE, white);
     // glLightfv(GL_LIGHT0, GL_SPECULAR, white);

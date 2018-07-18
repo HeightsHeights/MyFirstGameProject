@@ -1,6 +1,9 @@
 #pragma once
 #include "../header/collider.h"
 #include "../header/rawmodel.h"
+#include "../header/toolkit.h"
+
+#define MAX_PLAYER_HP 30
 /////////////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -98,6 +101,7 @@ public:
 class Chara : public Object {
 private:
 public:
+    ColorType color_type;
     bool exist;
     unsigned int hp;
     Vector3f aimpoint;
@@ -165,6 +169,10 @@ typedef struct {
     float enemy_accel_magnitude;
 
     Vector3f point;
+
+    ColorType enemy_color_type;
+    ColorType bullet_color_type;
+
 } EnemyInfo;
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -211,6 +219,8 @@ public:
     Vector3f shot_from_point[3];
 
     float subargument[3];
+
+    ColorType bullet_color_type;
 
     Enemy();
     Enemy(const char *filename);

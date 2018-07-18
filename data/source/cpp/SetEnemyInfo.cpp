@@ -24,7 +24,7 @@ void MainGame::SetEnemyInfo()
             3,                                         //敵のHP
             0,                                         //敵の攻撃開始時間
             150,                                       //敵の攻撃スパン
-            5,                                         //敵の攻撃回数
+            6,                                         //敵の攻撃回数
             0,                                         //一回の攻撃内の一間隔ごとのスパン
             1,                                         //一回の攻撃内のループ回数
             0.4f,                                      //攻撃速度
@@ -39,6 +39,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                             //敵の加速度の向き
             0.00f,                                     //加速度の大きさ
             Vector3f(10, 0, 50),                       //敵の目的地
+            CT_PURPLE,                                 //敵の色
+            CT_RED,                                    //敵の弾の色
         },
         {
             60,                                         //スポーン時間
@@ -55,7 +57,7 @@ void MainGame::SetEnemyInfo()
             6,                                          //敵の攻撃回数
             0,                                          //一回の攻撃内の一間隔ごとのスパン
             1,                                          //一回の攻撃内のループ回数
-            0.3f,                                       //攻撃速度
+            0.4f,                                       //攻撃速度
             0.0f,                                       //攻撃加速度
             1,                                          //一回の発射による弾数
             15.0f,                                      //角度的な幅間隔
@@ -67,6 +69,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                              //敵の加速度の向き
             0.00f,                                      //加速度の大きさ
             Vector3f(-10, 0, 50),                       //敵の目的地
+            CT_PURPLE,                                  //敵の色
+            CT_RED,                                     //敵の弾の色
         },
         {
             60,                                          //スポーン時間
@@ -95,6 +99,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                               //敵の加速度の向き
             0.00f,                                       //加速度の大きさ
             Vector3f(-10, 10, 50),                       //敵の目的地
+            CT_PURPLE,                                   //敵の色
+            CT_BLUE,                                     //敵の弾の色
         },
         {
             60,                                         //スポーン時間
@@ -123,6 +129,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                              //敵の加速度の向き
             0.00f,                                      //加速度の大きさ
             Vector3f(10, 10, 50),                       //敵の目的地
+            CT_PURPLE,                                  //敵の色
+            CT_BLUE,                                    //敵の弾の色
         },
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -154,7 +162,10 @@ void MainGame::SetEnemyInfo()
             0.1f,                           //スピードの大きさ
             Vector3f_ZERO,                  //敵の加速度の向き
             0.00f,                          //加速度の大きさ
-            Vector3f_ZERO                   //敵の目的地
+            Vector3f_ZERO,                  //敵の目的地
+            CT_PURPLE,                      //敵の色
+            CT_ORANGE,                      //敵の弾の色
+
         },
         {
             140,                              //スポーン時間
@@ -182,7 +193,9 @@ void MainGame::SetEnemyInfo()
             0.1f,                             //スピードの大きさ
             Vector3f_ZERO,                    //敵の加速度の向き
             0.00f,                            //加速度の大きさ
-            Vector3f_ZERO                     //敵の目的地
+            Vector3f_ZERO,                    //敵の目的地
+            CT_PURPLE,                        //敵の色
+            CT_CYAN,                          //敵の弾の色
         },
         {
             150,                             //スポーン時間
@@ -210,7 +223,9 @@ void MainGame::SetEnemyInfo()
             0.1f,                            //スピードの大きさ
             Vector3f_ZERO,                   //敵の加速度の向き
             0.00f,                           //加速度の大きさ
-            Vector3f_ZERO                    //敵の目的地
+            Vector3f_ZERO,                   //敵の目的地
+            CT_PURPLE,                       //敵の色
+            CT_CYAN,                         //敵の弾の色
         },
         {
             150,                             //スポーン時間
@@ -238,7 +253,9 @@ void MainGame::SetEnemyInfo()
             0.1f,                            //スピードの大きさ
             Vector3f_ZERO,                   //敵の加速度の向き
             0.00f,                           //加速度の大きさ
-            Vector3f_ZERO                    //敵の目的地
+            Vector3f_ZERO,                   //敵の目的地
+            CT_PURPLE,                       //敵の色
+            CT_ORANGE,                       //敵の弾の色
         },
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -271,6 +288,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                  //敵の加速度の向き
             0.00f,                          //加速度の大きさ
             Vector3f(10, 0, 80),            //敵の目的地
+            CT_PURPLE,                      //敵の色
+            CT_RED,                         //敵の弾の色
         },
         {
             155,                             //スポーン時間
@@ -299,6 +318,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                   //敵の加速度の向き
             0.00f,                           //加速度の大きさ
             Vector3f(-10, 0, 50),            //敵の目的地
+            CT_PURPLE,                       //敵の色
+            CT_BLUE,                         //敵の弾の色
         },
         {
             170,                             //スポーン時間
@@ -327,6 +348,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                   //敵の加速度の向き
             0.00f,                           //加速度の大きさ
             Vector3f(10, 10, 80),            //敵の目的地
+            CT_PURPLE,                       //敵の色
+            CT_BLUE,                         //敵の弾の色
         },
         {
             180,                            //スポーン時間
@@ -355,6 +378,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                  //敵の加速度の向き
             0.00f,                          //加速度の大きさ
             Vector3f(10, 0, 50),            //敵の目的地
+            CT_PURPLE,                      //敵の色
+            CT_RED,                         //敵の弾の色
         },
         {
             190,                             //スポーン時間
@@ -383,6 +408,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                   //敵の加速度の向き
             0.00f,                           //加速度の大きさ
             Vector3f(10, 10, 50),            //敵の目的地
+            CT_PURPLE,                       //敵の色
+            CT_BLUE,                         //敵の弾の色
         },
         {
             190,                              //スポーン時間
@@ -411,6 +438,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                    //敵の加速度の向き
             0.00f,                            //加速度の大きさ
             Vector3f(-10, 10, 50),            //敵の目的地
+            CT_PURPLE,                        //敵の色
+            CT_BLUE,                          //敵の弾の色
         },
         {
             200,                           //スポーン時間
@@ -421,7 +450,7 @@ void MainGame::SetEnemyInfo()
             EDT_toPlayer,                  //敵の向き設定
             EST_Machine_Aim,               //敵の攻撃の設定
             ESST_WaitUntilStop,            //敵の攻撃開始の設定
-            3,                             //敵のHP
+            10,                            //敵のHP
             0,                             //敵の攻撃開始時間
             150,                           //敵の攻撃スパン
             2,                             //敵の攻撃回数
@@ -439,6 +468,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                 //敵の加速度の向き
             0.00f,                         //加速度の大きさ
             Vector3f(0, 0, 50),            //敵の目的地
+            CT_RED,                        //敵の色
+            CT_YELLLOW,                    //敵の弾の色
         },
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -470,6 +501,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                      //敵の加速度の向き
             0.00f,                              //加速度の大きさ
             Vector3f(10, -10, 80),              //敵の目的地
+            CT_PURPLE,                          //敵の色
+            CT_CYAN,                            //敵の弾の色
         },
         {
             240,                                //スポーン時間
@@ -498,6 +531,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                      //敵の加速度の向き
             0.00f,                              //加速度の大きさ
             Vector3f(-10, -10, 80),             //敵の目的地
+            CT_PURPLE,                          //敵の色
+            CT_ORANGE,                          //敵の弾の色
         },
         {
             255,                                //スポーン時間
@@ -510,7 +545,7 @@ void MainGame::SetEnemyInfo()
             ESST_WaitUntilStop,                 //敵の攻撃開始の設定
             3,                                  //敵のHP
             0,                                  //敵の攻撃開始時間
-            150,                                //敵の攻撃スパン
+            200,                                //敵の攻撃スパン
             1,                                  //敵の攻撃回数
             50,                                 //一回の攻撃内の一間隔ごとのスパン
             3,                                  //一回の攻撃内のループ回数
@@ -526,6 +561,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                      //敵の加速度の向き
             0.00f,                              //加速度の大きさ
             Vector3f(0, 5, 80),                 //敵の目的地
+            CT_PURPLE,                          //敵の色
+            CT_GREEN,                           //敵の弾の色
         },
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -539,7 +576,7 @@ void MainGame::SetEnemyInfo()
             EDT_Custom,                    //敵の向き設定
             EST_Follow_Enemy_Direction,    //敵の攻撃の設定
             ESST_WaitUntilStop,            //敵の攻撃開始の設定
-            3,                             //敵のHP
+            25,                            //敵のHP
             0,                             //敵の攻撃開始時間
             5,                             //敵の攻撃スパン
             1000000,                       //敵の攻撃回数
@@ -557,6 +594,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                 //敵の加速度の向き
             0.00f,                         //加速度の大きさ
             Vector3f(0, 0, 50),            //敵の目的地
+            CT_YELLLOW,                    //敵の色
+            CT_GREEN,                      //敵の弾の色
         },
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -588,6 +627,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                  //敵の加速度の向き
             0.00f,                          //加速度の大きさ
             Vector3f(-20, 10, 50),          //敵の目的地
+            CT_PURPLE,                      //敵の色
+            CT_BLUE,                        //敵の弾の色
         },
         {
             320,                            //スポーン時間
@@ -616,6 +657,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                  //敵の加速度の向き
             0.00f,                          //加速度の大きさ
             Vector3f(20, -4, 50),           //敵の目的地
+            CT_PURPLE,                      //敵の色
+            CT_BLUE,                        //敵の弾の色
         },
         {
             335,                            //スポーン時間
@@ -644,6 +687,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                  //敵の加速度の向き
             0.00f,                          //加速度の大きさ
             Vector3f(-20, -4, 50),          //敵の目的地
+            CT_PURPLE,                      //敵の色
+            CT_BLUE,                        //敵の弾の色
         },
         {
             350,                            //スポーン時間
@@ -654,7 +699,7 @@ void MainGame::SetEnemyInfo()
             EDT_toPlayer,                   //敵の向き設定
             EST_Machine_Aim,                //敵の攻撃の設定
             ESST_WaitUntilStop,             //敵の攻撃開始の設定
-            3,                              //敵のHP
+            5,                              //敵のHP
             0,                              //敵の攻撃開始時間
             150,                            //敵の攻撃スパン
             1,                              //敵の攻撃回数
@@ -672,6 +717,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                  //敵の加速度の向き
             0.00f,                          //加速度の大きさ
             Vector3f(20, 10, 50),           //敵の目的地
+            CT_RED,                         //敵の色
+            CT_YELLLOW,                     //敵の弾の色
         },
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -703,6 +750,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                  //敵の加速度の向き
             0.00f,                          //加速度の大きさ
             Vector3f(0, 0, 50),             //敵の目的地
+            CT_PURPLE,                      //敵の色
+            CT_CYAN,                        //敵の弾の色
         },
         {
             415,                              //スポーン時間
@@ -731,6 +780,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                    //敵の加速度の向き
             0.00f,                            //加速度の大きさ
             Vector3f(-10, -2, 50),            //敵の目的地
+            CT_PURPLE,                        //敵の色
+            CT_ORANGE,                        //敵の弾の色
         },
         {
             430,                             //スポーン時間
@@ -759,6 +810,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                   //敵の加速度の向き
             0.00f,                           //加速度の大きさ
             Vector3f(10, -2, 50),            //敵の目的地
+            CT_PURPLE,                       //敵の色
+            CT_CYAN,                         //敵の弾の色
         },
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -791,6 +844,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                 //敵の加速度の向き
             0.00f,                         //加速度の大きさ
             Vector3f(0, 0, 50),            //敵の目的地
+            CT_PURPLE,                     //敵の色
+            CT_PURPLE,                     //敵の弾の色
         },
         {
             460,                           //スポーン時間
@@ -819,6 +874,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                 //敵の加速度の向き
             0.00f,                         //加速度の大きさ
             Vector3f(-10, -3, 80),         //敵の目的地
+            CT_PURPLE,                     //敵の色
+            CT_PURPLE,                     //敵の弾の色
         },
         {
             460,                            //スポーン時間
@@ -847,6 +904,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                  //敵の加速度の向き
             0.00f,                          //加速度の大きさ
             Vector3f(10, -3, 80),           //敵の目的地
+            CT_PURPLE,                      //敵の色
+            CT_PURPLE,                      //敵の弾の色
         },
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -878,6 +937,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                   //敵の加速度の向き
             0.00f,                           //加速度の大きさ
             Vector3f(-100, 20, 80),          //敵の目的地
+            CT_PURPLE,                       //敵の色
+            CT_CYAN,                         //敵の弾の色
         },
         {
             510,                             //スポーン時間
@@ -906,6 +967,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                   //敵の加速度の向き
             0.00f,                           //加速度の大きさ
             Vector3f(-100, 20, 80),          //敵の目的地
+            CT_PURPLE,                       //敵の色
+            CT_ORANGE,                       //敵の弾の色
         },
         {
             520,                             //スポーン時間
@@ -934,6 +997,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                   //敵の加速度の向き
             0.00f,                           //加速度の大きさ
             Vector3f(-100, 20, 80),          //敵の目的地
+            CT_PURPLE,                       //敵の色
+            CT_YELLLOW,                      //敵の弾の色
         },
         {
             530,                             //スポーン時間
@@ -962,6 +1027,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                   //敵の加速度の向き
             0.00f,                           //加速度の大きさ
             Vector3f(-100, 20, 80),          //敵の目的地
+            CT_PURPLE,                       //敵の色
+            CT_GREEN,                        //敵の弾の色
         },
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -993,6 +1060,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                    //敵の加速度の向き
             0.00f,                            //加速度の大きさ
             Vector3f(100, 20, 80),            //敵の目的地
+            CT_PURPLE,                        //敵の色
+            CT_CYAN,                          //敵の弾の色
         },
         {
             550,                              //スポーン時間
@@ -1021,6 +1090,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                    //敵の加速度の向き
             0.00f,                            //加速度の大きさ
             Vector3f(100, 20, 80),            //敵の目的地
+            CT_PURPLE,                        //敵の色
+            CT_ORANGE,                        //敵の弾の色
         },
         {
             560,                              //スポーン時間
@@ -1049,6 +1120,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                    //敵の加速度の向き
             0.00f,                            //加速度の大きさ
             Vector3f(100, 20, 80),            //敵の目的地
+            CT_PURPLE,                        //敵の色
+            CT_YELLLOW,                       //敵の弾の色
         },
         {
             570,                              //スポーン時間
@@ -1077,6 +1150,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                    //敵の加速度の向き
             0.00f,                            //加速度の大きさ
             Vector3f(100, 20, 80),            //敵の目的地
+            CT_PURPLE,                        //敵の色
+            CT_GREEN,                         //敵の弾の色
         },
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -1108,6 +1183,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                  //敵の加速度の向き
             0.00f,                          //加速度の大きさ
             Vector3f(-100, -20, 80),        //敵の目的地
+            CT_PURPLE,                      //敵の色
+            CT_RED,                         //敵の弾の色
         },
         {
             600,                             //スポーン時間
@@ -1136,6 +1213,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                   //敵の加速度の向き
             0.00f,                           //加速度の大きさ
             Vector3f(100, -20, 80),          //敵の目的地
+            CT_PURPLE,                       //敵の色
+            CT_RED,                          //敵の弾の色
         },
         /////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -1167,6 +1246,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                             //敵の加速度の向き
             0.00f,                                     //加速度の大きさ
             Vector3f(-100, 20, 80),                    //敵の目的地
+            CT_PURPLE,                                 //敵の色
+            CT_CYAN,                                   //敵の弾の色
         },
         {
             660,                                        //スポーン時間
@@ -1195,6 +1276,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                              //敵の加速度の向き
             0.00f,                                      //加速度の大きさ
             Vector3f(100, 20, 80),                      //敵の目的地
+            CT_PURPLE,                                  //敵の色
+            CT_ORANGE,                                  //敵の弾の色
         },
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1209,7 +1292,7 @@ void MainGame::SetEnemyInfo()
             EDT_Custom,                              //敵の向き設定
             EST_Boss,                                //敵の攻撃の設定
             ESST_WaitUntilStop,                      //敵の攻撃開始の設定
-            3,                                       //敵のHP
+            40,                                      //敵のHP
             0,                                       //敵の攻撃開始時間
             0,                                       //敵の攻撃スパン
             1,                                       //敵の攻撃回数
@@ -1227,6 +1310,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                           //敵の加速度の向き
             0.00f,                                   //加速度の大きさ
             Vector3f(0, 0, 80),                      //敵の目的地
+            CT_GREEN,                                //敵の色
+            CT_PURPLE,                               //敵の弾の色
         },
         {
             700,                           //スポーン時間
@@ -1237,7 +1322,7 @@ void MainGame::SetEnemyInfo()
             EDT_Forward,                   //敵の向き設定
             EST_Machine_Aim,               //敵の攻撃の設定
             ESST_WaitUntilStop,            //敵の攻撃開始の設定
-            3,                             //敵のHP
+            15,                            //敵のHP
             0,                             //敵の攻撃開始時間
             1000,                          //敵の攻撃スパン
             100000,                        //敵の攻撃回数
@@ -1246,7 +1331,7 @@ void MainGame::SetEnemyInfo()
             0.5f,                          //攻撃速度
             0.0f,                          //攻撃加速度
             2,                             //一回の発射による弾数
-            10.0f,                         //角度的な幅間隔
+            8.0f,                          //角度的な幅間隔
             2.0f,                          //数値的な幅間隔
             Vector3f(0, 0, POSITION_BACK), //敵の初期位置
             Vector3f_ZERO,                 //敵の初期向き
@@ -1255,6 +1340,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                 //敵の加速度の向き
             0.00f,                         //加速度の大きさ
             Vector3f(-20, 15, 80),         //敵の目的地
+            CT_PURPLE,                     //敵の色
+            CT_CYAN,                       //敵の弾の色
         },
         {
             700,                           //スポーン時間
@@ -1265,7 +1352,7 @@ void MainGame::SetEnemyInfo()
             EDT_Forward,                   //敵の向き設定
             EST_Machine_Aim,               //敵の攻撃の設定
             ESST_WaitUntilStop,            //敵の攻撃開始の設定
-            3,                             //敵のHP
+            15,                            //敵のHP
             0,                             //敵の攻撃開始時間
             1000,                          //敵の攻撃スパン
             100000,                        //敵の攻撃回数
@@ -1274,7 +1361,7 @@ void MainGame::SetEnemyInfo()
             0.5f,                          //攻撃速度
             0.0f,                          //攻撃加速度
             2,                             //一回の発射による弾数
-            10.0f,                         //角度的な幅間隔
+            8.0f,                          //角度的な幅間隔
             2.0f,                          //数値的な幅間隔
             Vector3f(0, 0, POSITION_BACK), //敵の初期位置
             Vector3f_ZERO,                 //敵の初期向き
@@ -1283,6 +1370,8 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                 //敵の加速度の向き
             0.00f,                         //加速度の大きさ
             Vector3f(20, 15, 80),          //敵の目的地
+            CT_PURPLE,                     //敵の色
+            CT_CYAN,                       //敵の弾の色
         },
         {
             700,                           //スポーン時間
@@ -1293,7 +1382,7 @@ void MainGame::SetEnemyInfo()
             EDT_Forward,                   //敵の向き設定
             EST_Machine_Aim,               //敵の攻撃の設定
             ESST_WaitUntilStop,            //敵の攻撃開始の設定
-            3,                             //敵のHP
+            25,                            //敵のHP
             0,                             //敵の攻撃開始時間
             300,                           //敵の攻撃スパン
             100000,                        //敵の攻撃回数
@@ -1311,8 +1400,9 @@ void MainGame::SetEnemyInfo()
             Vector3f_ZERO,                 //敵の加速度の向き
             0.00f,                         //加速度の大きさ
             Vector3f(00, 20, 80),          //敵の目的地
+            CT_PURPLE,                     //敵の色
+            CT_ORANGE,                     //敵の弾の色
         },
-
     };
     for (int i = 0; i < sizeof(ei) / sizeof(EnemyInfo); i++) {
         enemyinfo.push_back(ei[i]);

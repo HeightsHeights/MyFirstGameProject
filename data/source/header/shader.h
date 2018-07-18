@@ -17,6 +17,7 @@ private:
     static GLuint loadShader(const char *file, int type);
 
 public:
+    ShaderManager();
     ShaderManager(const char *vertex_filename, const char *fragment_filename);
     void start();
     void stop();
@@ -35,6 +36,7 @@ class StaticShader : public ShaderManager {
 private:
 public:
     StaticShader();
+    StaticShader(bool boolean);
 
 protected:
     void bindAttributes();

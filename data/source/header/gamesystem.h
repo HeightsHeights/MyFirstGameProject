@@ -17,6 +17,12 @@ typedef enum {
     gamemode_end   = 3,
 } GameMode;
 
+typedef enum {
+    GJ_NULL = 0,
+    GJ_Win  = 1,
+    GJ_Lose = 2,
+} GameJudge;
+
 /////////////////////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////////////////////
@@ -47,6 +53,9 @@ public:
 
 class MainGame : public Scene {
 private:
+    SDL_TimerID timer;
+    GameJudge judge;
+    bool pause;
     Player player;
     Object pointer;
     Enemy enemy[MAX_ENEMY];
