@@ -235,7 +235,7 @@ void Enemy::Set(EnemyInfo info)
     enemy_type = info.enemy_type;
     switch (enemy_type) {
     case ET_Sphere:
-        collider.spheres.push_back(Sphere(info.enemy_position, 1));
+        collider.spheres.push_back(Sphere(info.enemy_position, 1.2));
         break;
     case ET_Ufo: {
         collider.spheres.push_back(Sphere(info.enemy_position, 3.5));

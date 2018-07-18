@@ -176,6 +176,7 @@ void MainGame::Render()
         glPushMatrix();
         TranslateVector(player.aimpoint);
         LookatPoint(player.aimpoint, player.position);
+        glScaled(3, 3, 3);
         Colored(player.color_type);
         pointer.Draw();
         glPopMatrix();
