@@ -107,7 +107,7 @@ bool InitWindow()
     }
     //********************************
     //ディスプレイのwindow関係の初期化
-    GameManager::window = SDL_CreateWindow("HALLO_WORLD", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
+    GameManager::window = SDL_CreateWindow("HELLO_WORLD", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     if (GameManager::window == NULL) {
         printf("Dont creat window\n");
         return false;
